@@ -1,0 +1,9 @@
+{
+    "require": {
+        "ktamas77/firebase-php": "dev-master"
+    },
+    "autoload": {
+        "classmap": ["vendor/ktamas77/firebase-php/src/firebaseLib.php"]
+    }
+    
+}
