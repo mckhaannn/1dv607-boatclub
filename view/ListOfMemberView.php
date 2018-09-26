@@ -4,13 +4,13 @@ namespace view;
 
 class ListOfMemberView
 {
-  private static $delete = 'AddNewMemberView::delete';
-  private static $edit = 'AddNewMemberView::edit';
-  private static $back = 'AddNewMemberView::back';
-  private static $username = 'AddNewMemberView::username';
-  private static $editPerson = 'AddNewMemberView::editPerson';
-  private static $addBoat = 'AddNewMemberView::addBoat';
-  private static $goBack = 'AddNewMemberView::goBack';
+  private static $delete = 'ListOfMemberView::delete';
+  private static $edit = 'ListOfMemberView::edit';
+  private static $back = 'ListOfMemberView::back';
+  private static $username = 'ListOfMemberView::username';
+  private static $editPerson = 'ListOfMemberView::editPerson';
+  private static $addBoat = 'ListOfMemberView::addBoat';
+  private static $goBack = 'ListOfMemberView::goBack';
 
   private $personModel;
   public function __construct(\model\PersonModel $personModel)
@@ -20,13 +20,9 @@ class ListOfMemberView
 
   public function renderListOfMembers()
   {
-    if (!empty($_REQUEST[self::$edit])) {
 
-      $response = $this->generateSelectedMemberL();
-
-    } else {
       $response = $this->generateListHTML();
-    }
+    
     return $response;
   }
 
@@ -117,5 +113,9 @@ class ListOfMemberView
 		';
   }
 
-
+  public function lookForPost() {
+      return !empty($_POST[self::$delete]);
+  }
+  
 }
+

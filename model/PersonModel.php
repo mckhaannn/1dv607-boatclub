@@ -21,17 +21,22 @@ class PersonModel {
       "SocialSecurity" => $this->socialSecurity,
       "ID" => $hash
     );
-    $firebase->update('/users' . '/' . $this->name, $personInformation);
+    $firebase->update('/users' . '/' . $hash, $personInformation);
   }
+  
+  public function updatePersonData($name, $socialSecurity, $id) {
 
-  public function updatePersonData() {
     include('database/firebase.php');
     $personInformation = array(
-      "Name" => $this->name,
-      "SocialSecurity" => $this->socialSecurity,
-      "ID" => 7
+      "Name" => $name,
+      "SocialSecurity" => $socialSecurity,
     );
-    $firebase->update('/users' . '/' . $this->name, $personInformation);
+    $firebase->update('/users' . '/' . $id, $personInformation);
+  }
+
+  public function deletePerson($id) {
+    include('database/firebase.php');
+    $firebase->delete('/users' . '/' . $id);
   }
 
   public function fetchData() {
@@ -40,4 +45,5 @@ class PersonModel {
 
       return $value;
   }
+
 }

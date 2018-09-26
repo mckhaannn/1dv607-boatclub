@@ -50,14 +50,7 @@ class AddNewMemberView
 
     public function lookForPost() : bool
     {
-    
-        if(!empty($_POST[self::$add])){
-            // echo $this->getName();
-        }
-    
         return !empty($_POST[self::$add]);
-
-    
     }
 
     public function validNameAndSocialSecurity() {

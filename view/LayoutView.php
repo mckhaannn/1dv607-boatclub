@@ -9,25 +9,35 @@ class LayoutView
         
     }   
     
-    public function renderLayoutView($newMemberView, $listOfMemberView, $addBoatView, $selectedViews)
+    public function renderLayoutView($newMemberView, $listOfMemberView, $addBoatView, $selectedViews, $updateMemeber)
     {
         
 
         $boatView = null;
         $selectedView = null;
+        $updateMemeberView = null;
         $createMember = $newMemberView->renderAddNewMemberForm();
         $showMemberList = $listOfMemberView->renderListOfMembers();
-    
         
         if(isset($_POST['edit'])) {
             $createMember = null;
             $showMemberList = null;
-             $selectedView = $selectedViews->generateSelectedMemberL();
-             $boatView = $addBoatView->generateBoatForm();
-
-
-         
+            
+            $selectedView = $selectedViews->generateSelectedMemberL();
+            $boatView = $addBoatView->generateBoatForm();
+            
         }
+        if(isset($_POST['updateUser'])) {
+            echo'dsad';
+            $boatView = null;
+            $selectedView = null;
+            $createMember = null;
+            $showMemberList = null;
+            // $createMember = $newMemberView->renderAddNewMemberForm();
+            $updateMemeberView = $updateMemeber->renderEditHtml();
+
+        }
+
     //     if(isset($_POST['addBoat'])) {
     //         $boatView = $addBoatView->generateBoatForm();
     //    }
@@ -50,12 +60,18 @@ class LayoutView
               <h1 class="text-center">Boat Club</h1>
               <div class="container">
                   ' . $createMember . '
-                  <hr>
+
+                  <br/>
+                  <br/>
+
                   ' . $showMemberList . '
-                  <hr>
+                  <br/>
                     '  . $selectedView .  '
 
                     '  . $boatView .  '
+
+                    '  . $updateMemeberView .  '
+
               </div>
                     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
