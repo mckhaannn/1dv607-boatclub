@@ -14,11 +14,11 @@ class PersonModel {
   }
 
   public function addNewPersonToDatabase() {
-    $hash = md5($this->name);
     include('database/firebase.php');
+    $hash = md5($this->name);
     $personInformation = array(
       "Name" => $this->name,
-      "Social Security" => $this->socialSecurity,
+      "SocialSecurity" => $this->socialSecurity,
       "ID" => $hash
     );
     $firebase->update('/users' . '/' . $this->name, $personInformation);
@@ -28,9 +28,16 @@ class PersonModel {
     include('database/firebase.php');
     $personInformation = array(
       "Name" => $this->name,
-      "Social Security" => $this->socialSecurity,
+      "SocialSecurity" => $this->socialSecurity,
       "ID" => 7
     );
     $firebase->update('/users' . '/' . $this->name, $personInformation);
+  }
+
+  public function fetchData() {
+    include('database/firebase.php');
+    $value = $firebase->get('/users', array());
+
+      return $value;
   }
 }

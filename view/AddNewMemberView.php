@@ -7,7 +7,7 @@ class AddNewMemberView
     private static $add = 'AddNewMemberView::Add';
     private static $name = 'AddNewMemberView::UserName';
     private static $socialSecurity = 'AddNewMemberView::SocialSecurity';
-    private static $message = 'AddNewMemberView::Message';
+    private static $message = '';
 
     public function __construct()
     {
@@ -15,10 +15,12 @@ class AddNewMemberView
     }
     public function renderAddNewMemberForm()
     {
-        self::$message = 'Test Error Message';
+       // self::$message = '';
 
         if (!empty($_POST)) {
-       echo $this->getName();
+            self::$message = 'Done!';
+        } else {
+            self::$message = 'Please fill in the form';
         }
 
         $response = $this->generateAddNewMemberFormHTML(self::$message);
@@ -31,9 +33,9 @@ class AddNewMemberView
         return '
         <form method="post">
         <div class="form-group">
+        <small id="' . self::$message . '" class="form-text text-muted">' . self::$message . '</small>
             <label for="' . self::$name . '">Member Name</label>
             <input type="text" class="form-control"  id="' . self::$name . '" name="' . self::$name . '" value="' . $this->getName() . '" aria-describedby="nameHelp" placeholder="Enter Name">
-            <small id="' . self::$message . '" class="form-text text-muted">' . self::$message . '</small>
         </div>
         <div class="form-group">
             <label for="' . self::$socialSecurity . '">Social Security Number</label>
@@ -50,7 +52,7 @@ class AddNewMemberView
     {
     
         if(!empty($_POST[self::$add])){
-            echo $this->getName();
+            // echo $this->getName();
         }
     
         return !empty($_POST[self::$add]);
@@ -58,18 +60,20 @@ class AddNewMemberView
     
     }
 
-    public function getName()
-    {
-        if (isset($_POST[self::$name])) {
+    public function validNameAndSocialSecurity() {
+        return !empty($_POST[self::$name]) && !empty($_POST[self::$socialSecurity]);
+    }
+
+    public function getName() {
+        if(isset($_POST[self::$name])) {
             return $_POST[self::$name];
         }
     }
-    public function getSocialSecurity()
-    {
-        if (isset($_POST[self::$socialSecurity])) {
-            return $_POST[self::$socialSecurity];
+    public function getSocialSecurity() {   
+        if(isset($_POST[self::$socialSecurity])) {
+         return $_POST[self::$socialSecurity];
+    
         }
     }
-
 
 }
