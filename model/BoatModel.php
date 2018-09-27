@@ -26,9 +26,9 @@ class BoatModel {
     $firebase->push('/users' . '/' . $this->person . '/boats', $boatInfo);
   }
 
-  public function fetchBoatData($user) {
+  public function fetchBoatData($id) {
     include('database/firebase.php');
-    $value = $firebase->get('/users' . '/' . $user . '/boats', array());
+    $value = $firebase->get('/users' . '/' . $id . '/boats', array());
     return $value;
   }
 

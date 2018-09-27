@@ -25,10 +25,8 @@ class LayoutView
             
             $selectedView = $selectedViews->generateSelectedMemberL();
             $boatView = $addBoatView->generateBoatForm();
-            
         }
         if(isset($_POST['updateUser'])) {
-            echo'dsad';
             $boatView = null;
             $selectedView = null;
             $createMember = null;

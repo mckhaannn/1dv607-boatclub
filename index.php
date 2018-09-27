@@ -16,9 +16,9 @@ ini_set('display_errors', 'On');
 
 //CREATE OBJECTS OF THE VIEWS
 $layoutView = new \view\LayoutView();
-$selectedView = new \view\SelectedMemberView();
 $newMemberView = new \view\AddNewMemberView();
 $boatModel = new \model\BoatModel();
+$selectedView = new \view\SelectedMemberView($boatModel);
 $personModel = new \model\PersonModel();
 $addBoatView = new \view\AddBoatView();
 $updateMember = new \view\UpdateMember();
