@@ -39,7 +39,7 @@ class UpdateMember
       <label class="form-text text-muted" ></label>ID</label>
       <input  readonly class="form-control" id="' . self::$newId . '" name="' . self::$newId . '" value="' . self::$id . '">
       </div>
-      <input  class="btn btn-primary" type="submit" name="' . self::$update . '" />
+      <input  class="btn btn-primary" type="submit" name="' . self::$update . '" value="update" />
       <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$goBack . '" value="back" />
 
       </form>'

@@ -22,7 +22,7 @@ $boatModel = new \model\BoatModel();
 $personModel = new \model\PersonModel();
 $addBoatView = new \view\AddBoatView();
 $updateMember = new \view\UpdateMember();
-$listOfMemberView = new \view\ListOfMemberView($personModel);
+$listOfMemberView = new \view\ListOfMemberView($personModel, $boatModel);
 $personController = new \controller\PersonController($newMemberView, $personModel, $boatModel, $addBoatView, $selectedView, $updateMember);
 $mainController = new \controller\MainController($personController, $layoutView, $newMemberView, $listOfMemberView, $addBoatView, $selectedView, $updateMember);
 $mainController->render();

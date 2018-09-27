@@ -29,7 +29,18 @@ class BoatModel {
   public function fetchBoatData($user) {
     include('database/firebase.php');
     $value = $firebase->get('/users' . '/' . $user . '/boats', array());
-
-      return $value;
+    return $value;
   }
+
+
+
+  public function countBoats($boats) {
+    if($boats != null) {
+      $boatArray = json_decode($boats, true);
+      $amountOfBoats = count(array_keys($boatArray));
+      return $amountOfBoats;  
+    }
+
+  }
+
 }

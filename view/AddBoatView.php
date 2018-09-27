@@ -28,7 +28,7 @@ class AddBoatView
         <option value="Other">Other</option>
       </select>
       <div class="form-group">
-          <input type="hidden" name="selectedName" value="' . $_POST['name'] . '">
+          <input type="hidden" name="memberId" value="' . $_POST['id'] . '">
           <label for="' . self::$length . '">Enter Length</label>
           <input type="text" class="form-control"  id="' . self::$length . '" name="' . self::$length . '" placeholder="ex. 4m">
       </div>
@@ -53,6 +53,6 @@ class AddBoatView
     }
   }
   public function getName() {
-    return $_POST['selectedName'];
+    return $_POST['memberId'];
   }
 }
