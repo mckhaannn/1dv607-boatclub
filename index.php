@@ -1,30 +1,32 @@
 <?php
 
 require_once 'controller/MainController.php';
-require_once 'controller/PersonController.php';
-require_once 'view/AddNewMemberView.php';
-require_once 'view/ListOfMemberView.php';
-require_once 'view/LayoutView.php';
-require_once 'model/PersonModel.php';
-require_once 'view/addBoatView.php';
-require_once 'view/SelectedMemberView.php';
+require_once 'controller/MemberController.php';
 require_once 'model/BoatModel.php';
+require_once 'model/MemberModel.php';
+require_once 'view/AddBoatView.php';
+require_once 'view/AddNewMemberView.php';
+require_once 'view/BoatListView.php';
+require_once 'view/LayoutView.php';
+require_once 'view/ListOfMemberView.php';
+require_once 'view/SelectedMemberView.php';
 require_once 'view/UpdateBoatView.php';
-require_once 'view/UpdateMember.php';
+require_once 'view/UpdateMemberView.php';
 //MAKE SURE ERRORS ARE SHOWN.sd MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
 //CREATE OBJECTS OF THE VIEWS
-$layoutView = new \view\LayoutView();
-$newMemberView = new \view\AddNewMemberView();
+$addNewMemberView = new \view\AddNewMemberView();
 $boatModel = new \model\BoatModel();
+$boatListView = new \view\BoatListView($boatModel);
 $UpdateBoatView = new \view\UpdateBoatView();
-$selectedView = new \view\SelectedMemberView($boatModel);
-$personModel = new \model\PersonModel();
+$selectedMemberView = new \view\SelectedMemberView($boatModel);
+$memberModel = new \model\MemberModel();
+$layoutView = new \view\LayoutView();
 $addBoatView = new \view\AddBoatView();
-$updateMember = new \view\UpdateMember();
-$listOfMemberView = new \view\ListOfMemberView($personModel, $boatModel);
-$personController = new \controller\PersonController($newMemberView, $personModel, $boatModel, $addBoatView, $selectedView, $updateMember, $UpdateBoatView);
-$mainController = new \controller\MainController($personController, $layoutView, $newMemberView, $listOfMemberView, $addBoatView, $selectedView, $updateMember, $UpdateBoatView);
+$updateMember = new \view\UpdateMemberView();
+$listOfMemberView = new \view\ListOfMemberView($memberModel, $boatModel);
+$memberController = new \controller\memberController($addNewMemberView, $memberModel, $boatModel, $addBoatView, $selectedMemberView, $updateMember, $UpdateBoatView);
+$mainController = new \controller\MainController($memberController, $layoutView, $addNewMemberView, $listOfMemberView, $addBoatView, $selectedMemberView, $updateMember, $UpdateBoatView, $boatListView);
 $mainController->render();

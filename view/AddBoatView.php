@@ -4,21 +4,18 @@ namespace view;
 
 class AddBoatView
 {
-
-  private static $type = 'AddBoatView::type';
   private static $length = 'AddBoatView::length';
   private static $addBoat = 'AddBoatView::addBoat';
 
 
-
-  public function generateBoatForm()
+  /**
+   * 
+   * creates add boat form
+   * 
+   * @return String
+   */
+  public function generateAddBoatForm()
   {
-
-    if (!empty($_REQUEST[self::$addBoat])) {
-      $this->getType();
-
-    }
-
     return '
     <form method="post">
       <select name="option" class="form-control">
@@ -28,7 +25,7 @@ class AddBoatView
         <option value="Other">Other</option>
       </select>
       <div class="form-group">
-          <input type="hidden" name="memberId" value="' . $_POST['id'] . '">
+          <input type="hidden" name="memberId" value="' . $_POST['memberId'] . '">
           <label for="' . self::$length . '">Enter Length</label>
           <input type="text" class="form-control"  id="' . self::$length . '" name="' . self::$length . '" placeholder="ex. 4m">
       </div>
@@ -37,22 +34,53 @@ class AddBoatView
 
   }
 
-  public function lookForPost() {
-    
+  /**
+   * 
+   * check if there is a post on addboat
+   * 
+   * @return Bool
+   */
+  
+  public function lookForPost() : bool
+  {
     return isset($_POST[self::$addBoat]);
   }
 
-  public function getType() {
-    if(isset($_POST['option'])) {
+  /**
+   *  
+   * return the chosen boat type option
+   * 
+   * @return String
+   */
+  
+  public function getBoatType() : string
+  {
+    if (isset($_POST['option'])) {
       return $_POST['option'];
     }
   }
-  public function getLength() {
-    if(isset($_POST[self::$length])) {
+  /**
+   * return the length of a boat
+   * 
+   * @return Int
+   */
+  
+  public function getLength() : int
+  {
+    if (isset($_POST[self::$length])) {
       return $_POST[self::$length];
     }
   }
-  public function getName() {
+  /**
+   * 
+   * return member id
+   * 
+   * @return String
+   */
+  
+  public function getMemberId() : string
+  {
     return $_POST['memberId'];
   }
+  
 }

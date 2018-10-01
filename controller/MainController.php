@@ -4,56 +4,66 @@ namespace controller;
 
 class MainController
 {
-    private $personController;
+    private $memberController;
     private $layoutView;
-    private $memberView;
+    private $addNewaddNewMemberView;
     private $listView;
     private $boatView;
     private $selectedView;
     private $updateMember;
     private $updateBoat;
+    private $boatListView;
 
-    public function __construct(\controller\PersonController $personController, \view\LayoutView $layoutView, \view\AddNewMemberView $memberView, \view\ListOfMemberView $listView, \view\AddBoatView $boatView, \view\SelectedMemberView $selectedView, \view\UpdateMember $updateMember, \view\UpdateBoatView $updateBoat)
+    public function __construct(\controller\MemberController $memberController, \view\LayoutView $layoutView, \view\AddNewMemberView $addNewMemberView, \view\ListOfMemberView $listView, \view\AddBoatView $boatView, \view\SelectedMemberView $selectedView, \view\UpdateMemberView $updateMember, \view\UpdateBoatView $updateBoat, \view\BoatListView $boatListView)
     {
 
-        $this->personController = $personController;
+        $this->memberController = $memberController;
         $this->layoutView = $layoutView;
-        $this->memberView = $memberView;
+        $this->addNewMemberView = $addNewMemberView;
         $this->listView = $listView;
         $this->boatView = $boatView;
         $this->selectedView = $selectedView;
         $this->updateMember = $updateMember;
         $this->updateBoat = $updateBoat;
+        $this->boatListView = $boatListView;
 
     }
     public function render()
     {
         $this->layoutView->getVariablesToLayoutView(
-            $this->memberView,
+            $this->addNewMemberView,
             $this->listView,
             $this->boatView,
             $this->selectedView,
             $this->updateMember,
-            $this->updateBoat
+            $this->updateBoat,
+            $this->boatListView
         );
-        if($this->memberView->lookForPost()) {
-            $this->personController->controller();
+
+        if($this->addNewMemberView->lookForPost()) {
+            $this->memberController->controller();
         }
+
         if($this->boatView->lookForPost()) {
-            $this->personController->addBoat();
+            $this->memberController->addBoat();
         }
+
         if($this->updateMember->lookForPost()) {
-            $this->personController->editMember();
+            $this->memberController->editMember();
         }
+
         if($this->listView->lookForPost()) {
-            $this->personController->deleteMember();
+            $this->memberController->deleteMember();
         }
+
         if($this->updateBoat->lookForPost()) {
-            $this->personController->editBoat();
+            $this->memberController->editBoat();
         }
-        // if($this->selectedView->lookForPost()) {
-        //     $this->personController->deleteBoat();
-        // }
+
+        if($this->updateBoat->lookForDeletePost()) {
+            $this->memberController->deleteBoat();
+        }
+        
         $this->layoutView->renderLayoutView();    
     }
  

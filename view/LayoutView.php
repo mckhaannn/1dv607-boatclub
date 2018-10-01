@@ -15,7 +15,12 @@ class LayoutView
 
     }
 
-    public function getVariablesToLayoutView($memberView, $listOfMemberView, $addBoatView, $selectedViews, $updateMember, $updateBoat)
+    /**
+     * retrives values
+     * 
+     * @return void
+     */
+    public function getVariablesToLayoutView($memberView, $listOfMemberView, $addBoatView, $selectedViews, $updateMember, $updateBoat,$boatListView)
     {
         $this->memberView = $memberView;
         $this->listOfMemberView = $listOfMemberView;
@@ -23,26 +28,38 @@ class LayoutView
         $this->selectedViews = $selectedViews;
         $this->updateMember = $updateMember;
         $this->updateBoat = $updateBoat;
+        $this->boatListView = $boatListView;
     }
 
+    /**
+     * decides what view to be shown
+     * 
+     * @return String
+     */
     public function showLayout() {
         $html = "";
          if (isset($_POST['edit'])) {
-            $html .= $this->selectedViews->render();
-            $html .=$this->addBoatView->generateBoatForm();
+            $html .= $this->selectedViews->renderSelectedMember();
+            $html .= $this->boatListView->generateBoatTable();
+            $html .=$this->addBoatView->generateAddBoatForm();
         } else if (isset($_POST['updateUser'])) {
-            $html = $this->updateMember->renderEditHtml();
+            $html = $this->updateMember->renderUpdateMemberForm();
         } else if (isset($_POST['editBoat'])) {
-            $html = $this->updateBoat->renderEditHtml();
+            $html = $this->updateBoat->generateUpdateBoatForm();
         } else {
-            $html .= $this->memberView->renderAddNewMemberForm();
-            $html .= $this->listOfMemberView->renderListOfMembers();
+            $html .= $this->memberView->generateAddNewMemberForm();
+            $html .= $this->listOfMemberView->generateInfoListHTML();
         }
         return $html;
     }
 
 
-
+    /**
+     * The base html of the program
+     * 
+     * @return echo
+     */
+    
     public function renderLayoutView()
     {
         echo '<!DOCTYPE html>

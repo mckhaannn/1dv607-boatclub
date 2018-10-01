@@ -6,43 +6,79 @@ class ListOfMemberView
 {
     private static $delete = 'ListOfMemberView::delete';
     private static $edit = 'ListOfMemberView::edit';
-    private static $back = 'ListOfMemberView::back';
-    private static $username = 'ListOfMemberView::username';
-    private static $editPerson = 'ListOfMemberView::editPerson';
-    private static $addBoat = 'ListOfMemberView::addBoat';
-    private static $goBack = 'ListOfMemberView::goBack';
 
 
-    private $personModel;
+    private $memberModel;
     private $boatModel;
-
-    public function __construct(\model\PersonModel $personModel, \model\boatModel $boatModel)
+    
+    public function __construct(\model\MemberModel $memberModel, \model\boatModel $boatModel)
     {
-        $this->personModel = $personModel;
+        $this->memberModel = $memberModel;
         $this->boatModel = $boatModel;
     }
 
-    public function renderListOfMembers()
+    /**
+     * 
+     * fetch member information and creates a list depending on what setting you have chosen.
+     * 
+     * @return String
+     */
+    private function generateMemberInfoList()
     {
+        $values = $this->memberModel->fetchData();
+        $memberData = json_decode($values, true);
 
-        $response = $this->generateListHTMLList();
-
-        return $response;
+        $html = "";
+        foreach ($memberData as $key) {
+            $this->member = $key['Name'];
+            $this->memberId = $key['ID'];
+            $this->socialSecurity = $key['SocialSecurity'];
+            $numberOfBoats = $this->boatModel->countBoats($this->boatModel->fetchBoatData($key['ID']));
+                        
+            if (isset($_GET['verbose'])) {
+                $html .= $this->generateMemberListVerbose($this->member, $this->memberId, $this->socialSecurity, $this->fetchBoatInformation($this->memberId));
+            } else {
+                $html .= $this->generateMemberListCompact($this->member, $this->memberId, $this->socialSecurity, $numberOfBoats);
+            }
+        };
+        return $html;
     }
-
     
-    public function selectView() {
-        if (isset($_GET['verbose'])) { 
-           return $this->generateListOfPersonsVerbose();
-        } else {
-           return $this->generateListOfPersonsCompact();
-        }        
+    /**
+     * 
+     * fetch boat information for every member, only used on verbose list
+     * 
+     * @return String
+     */    
+    private function fetchBoatInformation($MemberId)
+    {
+        $html = "";
+        $boatInfo = $this->boatModel->fetchBoatData($MemberId);
+        $decodedBoatInfo = json_decode($boatInfo, true);
+        if ($decodedBoatInfo != null) {
+            foreach ($decodedBoatInfo as $key) {
+                $type = $key['Type'];
+                $length = $key['Length'];
+                $boatId = $key['ID'];
+                $html .= $this->boatInfoBox($type, $length, $boatId);
+            }
+            return $html;
+        }
     }
-    private function boatInfoHTML($type, $length, $boatId) {
+
+    /**
+     * 
+     * Creates a inforamtion box on fetched boat info
+     * 
+     * @return String
+     */
+    
+    private function boatInfoBox($type, $length, $boatId)
+    {
         return '
         <div class="list-group">
         <br>
-    <a href="#" class="list-group-item list-group-item-action ">
+            <a href="#" class="list-group-item list-group-item-action ">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">Boat</h5>
           </div>
@@ -54,72 +90,27 @@ class ListOfMemberView
         ';
     }
 
-    private function generateBoatInfoList($id) {
-        $html = "";
-        $boatInfo =  $this->boatModel->fetchBoatData($id);
-        $decodedBoatInfo = json_decode($boatInfo, true);
-        if($decodedBoatInfo != null) {
-            foreach ($decodedBoatInfo as $key) {
-                $type = $key['Type'];
-                $length = $key['Length'];
-                $boatId = $key['ID'];
-                $html .= $this->boatInfoHTML($type, $length, $boatId);
-            }
-            return $html;
-        }
-    }
-    private function generateListOfPersonsVerbose()
-    {
-
-        $values = $this->personModel->fetchData();
-        $userData = json_decode($values, true); 
-
-        $html = "";
-
-        foreach ($userData as $key) {
-            $this->name = $key['Name'];
-            $this->ID = $key['ID'];
-            $this->socialSecurity = $key['SocialSecurity'];   
-            $html .= $this->createMemberListVerbose($this->name, $this->ID, $this->socialSecurity, $this->generateBoatInfoList($this->ID));
-        };
-        return $html;
-    }
-
-    private function generateListOfPersonsCompact()
-    {
-        $values = $this->personModel->fetchData();
-        $userData = json_decode($values, true);
-
-        $html = "";
-        foreach ($userData as $key) {
-            $this->name = $key['Name'];
-            $this->ID = $key['ID'];
-            $this->socialSecurity = $key['SocialSecurity'];
-            $numberOfBoats = $this->boatModel->countBoats($this->boatModel->fetchBoatData($key['ID']));
-            $html .= $this->createMemberListCompact($this->name, $this->ID, $this->socialSecurity, $numberOfBoats);
-        };
-        return $html;
-    }
-    
-    
-    /*
-    Foreach member in DB return listObject
+    /**
+     * 
+     * generate diffrent table names depending on settings
+     * 
+     * @return String
      */
-
-    public function renderListitems()
+    
+    public function renderListTable()
     {
         if (isset($_GET['verbose'])) {
             return '
             <th>Name</th>
             <th>Social Security</th>
-        <th>ID</th>
-        <th></th>
+            <th>ID</th>
+            <th></th>
             <th>Boats</th>
             <th></th>
             <th>Edit</th>
             <th>Delete</th>
             ';
-        } else  {
+        } else {
             return '
             <th>Name</th>
             <th>ID</th>
@@ -133,18 +124,25 @@ class ListOfMemberView
     }
 
 
-    public function createMemberListCompact($name, $id, $socialSecurity, $numberOfBoats)
+    /**
+     * 
+     * creates a compact list
+     * 
+     * @return String
+     */
+    
+    public function generateMemberListCompact($member, $memberId, $socialSecurity, $numberOfBoats)
     {
         return '
           <form method="post">
           <tr>
-          <td value="' . $name . '">' . $name . '</td>
-          <td>' . $id . '</td>
+          <td value="' . $member . '">' . $member . '</td>
+          <td>' . $memberId . '</td>
           <td class="text-center">' . $numberOfBoats . '</td>
           <td></td>
           <td>
-          <input type="hidden" name="name" value="' . $name . '">
-          <input type="hidden" name="id" value="' . $id . '">
+          <input type="hidden" name="member" value="' . $member . '">
+          <input type="hidden" name="memberId" value="' . $memberId . '">
           <input type="hidden" name="socialSecurity" value="' . $socialSecurity . '">
           <input  class="btn btn-primary btn-xs " type="submit" name="edit" value="edit"
           </td>
@@ -157,19 +155,26 @@ class ListOfMemberView
     }
 
 
-    public function createMemberListVerbose($name, $id, $socialSecurity, $boatList)
+    /**
+     * 
+     * creates a verbose list
+     * 
+     * @return String
+     */
+    
+    public function generateMemberListVerbose($member, $memberId, $socialSecurity, $boatList)
     {
-    return '
+        return '
         <form method="post">
         <tr>
-        <td value="' . $name . '">' . $name . '</td>
+        <td value="' . $member . '">' . $member . '</td>
         <td>' . $socialSecurity . '</td>
-        <td>' . $id . '</td>
+        <td>' . $memberId . '</td>
         <td></td>
         <td>' . $boatList . '</td>
         <td>
-        <input type="hidden" name="name" value="' . $name . '">
-        <input type="hidden" name="id" value="' . $id . '">
+        <input type="hidden" name="member" value="' . $member . '">
+        <input type="hidden" name="memberId" value="' . $memberId . '">
         <input type="hidden" name="socialSecurity" value="' . $socialSecurity . '">
          </td>
         <td>
@@ -182,7 +187,14 @@ class ListOfMemberView
     </form>';
     }
 
-    private function generateListHTMLList()
+
+    /**
+     * 
+     * Container for all the lists.
+     * 
+     * @return String
+     */
+    public function generateInfoListHTML()
     {
         return '
   <div class=container>
@@ -208,12 +220,12 @@ class ListOfMemberView
                       <div class="table-responsive">
                           <table id="mytable" class="table table-bordred table-striped">
                               <thead>
-                                ' . $this->renderListitems() . '
+                                ' . $this->renderListTable() . '
                               <td>
                             </thead>
 
                               <tbody>
-                              ' . $this->selectView() . '
+                              ' . $this->generateMemberInfoList() . '
                               </tbody>
                               
                           </table>
@@ -224,10 +236,16 @@ class ListOfMemberView
           ';
     }
 
-    public function lookForPost()
+
+    /**
+     * check if member wants to delete
+     * 
+     * @return Bool
+     */
+    
+    public function lookForPost() : bool
     {
         return !empty($_POST[self::$delete]);
     }
-
 }
 
