@@ -9,13 +9,8 @@ class AddNewMemberView
     private static $socialSecurity = 'AddNewMemberView::SocialSecurity';
     private static $message = '';
 
-    public function __construct()
-    {
-
-    }
     public function renderAddNewMemberForm()
     {
-       // self::$message = '';
 
         if (!empty($_POST)) {
             self::$message = 'Done!';

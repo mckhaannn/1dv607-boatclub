@@ -39,7 +39,7 @@ class AddBoatView
 
   public function lookForPost() {
     
-    return !empty($_POST[self::$addBoat]);
+    return isset($_POST[self::$addBoat]);
   }
 
   public function getType() {

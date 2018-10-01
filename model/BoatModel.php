@@ -2,45 +2,72 @@
 
 namespace model;
 
+require_once('database/firebase.php');
+
 class BoatModel {
 
   private $type;
   private $length;
   private $person;
 
-  public function reciveBoatData($type, $lenght, $person) {
+  public function __construct()
+  {
+    $this->server = new \database\Server();
+    $this->firebase = $this->server->firebase(); 
+  }
+
+  public function reciveBoatData($type, $length, $person) {
     
     $this->type = $type;
-    $this->lenght = $lenght;
+    $this->length = $length;
     $this->person = $person;
     
   }
 
   public function addBoatToPerson() {
-    include('database/firebase.php');
+    $hash = md5($this->type . $this->length . rand(1, 999));
     $boatInfo = array(
       "Type" => $this->type,
-      "Lenght" => $this->lenght,
-      "ID" => rand(5, 153)
+      "Length" => $this->length,
+      "ID" => $hash
     );
-    $firebase->push('/users' . '/' . $this->person . '/boats', $boatInfo);
+    $this->firebase->update('/users' . '/' . $this->person . '/boats' . '/' . $hash, $boatInfo);
   }
 
   public function fetchBoatData($id) {
-    include('database/firebase.php');
-    $value = $firebase->get('/users' . '/' . $id . '/boats', array());
+    $value = $this->firebase->get('/users' . '/' . $id . '/boats', array());
     return $value;
+  }
+
+  public function updateBoatData($type, $length, $boatId, $id) {
+
+    //var_dump($id);
+    $boatInformation = array(
+      "Type" => $type,
+      "length" => $length,
+    );
+    $this->firebase->update('/users' . '/' . $id . '/boats' . '/' . $boatId, $boatInformation);
   }
 
 
 
   public function countBoats($boats) {
-    if($boats != null) {
+    if($this->checkNull($boats) == false) {
       $boatArray = json_decode($boats, true);
+      if($this->checkNull($boatArray) == true) {
+        $boatArray = 0;
+        return $boatArray;
+      }
       $amountOfBoats = count(array_keys($boatArray));
       return $amountOfBoats;  
     }
 
   }
-
+  private function checkNull($value) {
+     if ($value == null) {
+       return true;
+     }
+    return false;
+  }
+  
 }

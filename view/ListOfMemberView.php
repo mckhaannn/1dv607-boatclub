@@ -42,12 +42,12 @@ class ListOfMemberView
         return '
         <div class="list-group">
         <br>
-    <a href="#" class="list-group-item list-group-item-action flex-coalign-items-start active">
+    <a href="#" class="list-group-item list-group-item-action ">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">Boat</h5>
           </div>
           <p class="mb-1">Type: ' . $type . '</p>
-          <p class="mb-1">Lenght: ' . $length . '</p>
+          <p class="mb-1">length: ' . $length . '</p>
           <small>ID: ' . $boatId . '</small>
         </a>
       </div>
@@ -58,13 +58,15 @@ class ListOfMemberView
         $html = "";
         $boatInfo =  $this->boatModel->fetchBoatData($id);
         $decodedBoatInfo = json_decode($boatInfo, true);
-        foreach ($decodedBoatInfo as $key) {
-            $type = $key['Type'];
-            $lenght = $key['Lenght'];
-            $boatId = $key['ID'];
-            $html .= $this->boatInfoHTML($type, $lenght, $boatId);
+        if($decodedBoatInfo != null) {
+            foreach ($decodedBoatInfo as $key) {
+                $type = $key['Type'];
+                $length = $key['Length'];
+                $boatId = $key['ID'];
+                $html .= $this->boatInfoHTML($type, $length, $boatId);
+            }
+            return $html;
         }
-        return $html;
     }
     private function generateListOfPersonsVerbose()
     {
@@ -89,7 +91,6 @@ class ListOfMemberView
         $userData = json_decode($values, true);
 
         $html = "";
-
         foreach ($userData as $key) {
             $this->name = $key['Name'];
             $this->ID = $key['ID'];

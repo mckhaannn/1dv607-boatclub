@@ -11,8 +11,9 @@ class MainController
     private $boatView;
     private $selectedView;
     private $updateMember;
+    private $updateBoat;
 
-    public function __construct(\controller\PersonController $personController, \view\LayoutView $layoutView, \view\AddNewMemberView $memberView, \view\ListOfMemberView $listView, \view\AddBoatView $boatView, \view\SelectedMemberView $selectedView, \view\UpdateMember $updateMember)
+    public function __construct(\controller\PersonController $personController, \view\LayoutView $layoutView, \view\AddNewMemberView $memberView, \view\ListOfMemberView $listView, \view\AddBoatView $boatView, \view\SelectedMemberView $selectedView, \view\UpdateMember $updateMember, \view\UpdateBoatView $updateBoat)
     {
 
         $this->personController = $personController;
@@ -22,16 +23,18 @@ class MainController
         $this->boatView = $boatView;
         $this->selectedView = $selectedView;
         $this->updateMember = $updateMember;
+        $this->updateBoat = $updateBoat;
 
     }
     public function render()
     {
-        $this->layoutView->renderLayoutView(
+        $this->layoutView->getVariablesToLayoutView(
             $this->memberView,
             $this->listView,
             $this->boatView,
             $this->selectedView,
-            $this->updateMember
+            $this->updateMember,
+            $this->updateBoat
         );
         if($this->memberView->lookForPost()) {
             $this->personController->controller();
@@ -45,6 +48,10 @@ class MainController
         if($this->listView->lookForPost()) {
             $this->personController->deleteMember();
         }
+        if($this->updateBoat->lookForPost()) {
+            $this->personController->editBoat();
+        }
+        $this->layoutView->renderLayoutView();    
     }
  
 }

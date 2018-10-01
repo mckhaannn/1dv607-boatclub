@@ -4,48 +4,47 @@ namespace view;
 
 class LayoutView
 {
+    private $memberView;
+    private $listOfMemberView;
+    private $addBoatView;
+    private $selectedViews;
+    private $updateMember;
+    private $updateBoat;
     public function __construct()
-    {   
-        
-    }   
-    
-    public function renderLayoutView($newMemberView, $listOfMemberView, $addBoatView, $selectedViews, $updateMemeber)
     {
-        
 
-        $boatView = null;
-        $selectedView = null;
-        $updateMemeberView = null;
-        $createMember = $newMemberView->renderAddNewMemberForm();
-        $showMemberList = $listOfMemberView->renderListOfMembers();
-        
-        if(isset($_POST['edit'])) {
-            $createMember = null;
-            $showMemberList = null;
-            
-            $selectedView = $selectedViews->generateSelectedMemberL();
-            $boatView = $addBoatView->generateBoatForm();
+    }
+
+    public function getVariablesToLayoutView($memberView, $listOfMemberView, $addBoatView, $selectedViews, $updateMember, $updateBoat)
+    {
+        $this->memberView = $memberView;
+        $this->listOfMemberView = $listOfMemberView;
+        $this->addBoatView = $addBoatView;
+        $this->selectedViews = $selectedViews;
+        $this->updateMember = $updateMember;
+        $this->updateBoat = $updateBoat;
+    }
+
+    public function showLayout() {
+        $html = "";
+         if (isset($_POST['edit'])) {
+            $html .= $this->selectedViews->render();
+            $html .=$this->addBoatView->generateBoatForm();
+        } else if (isset($_POST['updateUser'])) {
+            $html = $this->updateMember->renderEditHtml();
+        } else if (isset($_POST['editBoat'])) {
+            $html = $this->updateBoat->renderEditHtml();
+        } else {
+            $html .= $this->memberView->renderAddNewMemberForm();
+            $html .= $this->listOfMemberView->renderListOfMembers();
         }
-        if(isset($_POST['updateUser'])) {
-            $boatView = null;
-            $selectedView = null;
-            $createMember = null;
-            $showMemberList = null;
-            // $createMember = $newMemberView->renderAddNewMemberForm();
-            $updateMemeberView = $updateMemeber->renderEditHtml();
-
-        }
-
-    //     if(isset($_POST['addBoat'])) {
-    //         $boatView = $addBoatView->generateBoatForm();
-    //    }
-
-        /**if(isset($_POST['delete'])){
-            echo 'deleteTest';
-        }**/
-        
+        return $html;
+    }
 
 
+
+    public function renderLayoutView()
+    {
         echo '<!DOCTYPE html>
         <html>
           <head>
@@ -57,18 +56,8 @@ class LayoutView
 
               <h1 class="text-center">Boat Club</h1>
               <div class="container">
-                  ' . $createMember . '
 
-                  <br/>
-                  <br/>
-
-                  ' . $showMemberList . '
-                  <br/>
-                    '  . $selectedView .  '
-
-                    '  . $boatView .  '
-
-                    '  . $updateMemeberView .  '
+            ' . $this->showLayout() . '                
 
               </div>
                     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -77,5 +66,5 @@ class LayoutView
                 </body>
       </html>
   ';
-    }   
+    }
 }

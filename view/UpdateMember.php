@@ -57,7 +57,6 @@ class UpdateMember
     public function getUpdatedName()
     {
         if (isset($_POST[self::$newName])) {
-            var_dump($_POST[self::$newName]);
             return $_POST[self::$newName];
         }
     }
@@ -65,7 +64,6 @@ class UpdateMember
     public function getUpdatedSocialSecurity()
     {
         if (isset($_POST[self::$newSocialSecurity])) {
-            var_dump($_POST[self::$newSocialSecurity]);
 
             return $_POST[self::$newSocialSecurity];
         }
