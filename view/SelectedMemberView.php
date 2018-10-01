@@ -8,7 +8,7 @@ class SelectedMemberView
   
   private static $goBack = 'SelectedMemberView::goBack';
   private static $edit = 'selectedMemberView::updateUser';
-  private static $delete = 'selectedMemberView::delete';
+  private static $deleteBoat = 'selectedMemberView::deleteBoat';
   private static $editBoat = 'selectedMemberView::editBoat';
   // private static $newId = 'selectedMemberView::newId';
   private static $name;
@@ -119,22 +119,24 @@ class SelectedMemberView
         <button  class="btn btn-primary btn-xs " type="submit" name="editBoat" value="' . self::$id . '" >edit</button>
         </td>
         <td>
-        <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$delete . '" value="delete" />
+        <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$deleteBoat . '" value="deleteBoat" />
         </td>
     </tr>
     </form>
         ';
   }
 
-  public function getId() {
-    if(isset(self::$id)) {
+  public function getId() {    
+    
+    if(isset($_POST['id'])) {
       return $_POST['id'];
     }
   }
 
-  public function userID() {
-    if(isset($_POST['userId'])) {
-      return $_POST['userId'];
-    }
+  public function lookForPost() : bool {
+    return isset($_POST[self::$deleteBoat]);
+
   }
+
+  
 }

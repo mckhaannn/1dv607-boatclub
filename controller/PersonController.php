@@ -42,7 +42,7 @@ class PersonController {
   public function editBoat() {
     $this->boatModel->updateBoatData($this->updateBoat->getUpdatedType(),$this->updateBoat->getUpdatedLength(), $this->updateBoat->getId(), $this->updateBoat->personId());
   }
-  public function deleteBoat() {
-    $this->boatModel->deleteBoatData();
-  }
+  // public function deleteBoat() {
+  //   $this->boatModel->deleteBoat($this->selectedMemberView->getId(), $this->updateBoat->getId());
+  // }
 }

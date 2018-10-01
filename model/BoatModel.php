@@ -39,6 +39,10 @@ class BoatModel {
     return $value;
   }
 
+  public function deleteBoat($id, $boatId) {
+    $this->firebase->delete('/users' . '/' . $id . '/boats' . '/' . $boatId);
+  }
+
   public function updateBoatData($type, $length, $boatId, $id) {
 
     //var_dump($id);

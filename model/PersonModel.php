@@ -39,7 +39,10 @@ class PersonModel {
   }
 
   public function deletePerson($id) {
-    $this->firebase->delete('/users' . '/' . $id);
+    var_dump($id);
+    if($id != null) {
+      $this->firebase->delete('/users' . '/' . $id);
+    }
   }
 
   public function fetchData() {

@@ -51,6 +51,9 @@ class MainController
         if($this->updateBoat->lookForPost()) {
             $this->personController->editBoat();
         }
+        // if($this->selectedView->lookForPost()) {
+        //     $this->personController->deleteBoat();
+        // }
         $this->layoutView->renderLayoutView();    
     }
  
