@@ -60,13 +60,15 @@ class BoatListView {
     $html = "";
     $boatData = $this->boatModel->fetchBoatData($this->getMemberId());
     $decodedBoatData =  json_decode($boatData, true);
-    foreach ($decodedBoatData as $key) {
-      $type = $key['Type'];
-      $length = $key['Length'];
-      $id = $key['ID'];
-      $html .= $this->generateBoatList($type, $length, $id, $this->getMemberId());
+    if($decodedBoatData != null) {
+      foreach ($decodedBoatData as $key) {
+        $type = $key['Type'];
+        $length = $key['Length'];
+        $id = $key['ID'];
+        $html .= $this->generateBoatList($type, $length, $id, $this->getMemberId());
+      }
+      return $html;
     }
-    return $html;
   }
 
 
