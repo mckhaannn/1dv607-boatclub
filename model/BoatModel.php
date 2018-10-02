@@ -19,11 +19,16 @@ class BoatModel {
     $this->firebase = $this->server->firebase(); 
   }
 
+  public function test() {
+    echo 'hi';
+  }
+
   /**
    * retrives data to use in other modules
    */
   public function reciveBoatData($type, $length, $person) {
     
+    // var_dump($type, $length, $person);
     $this->type = $type;
     $this->length = $length;
     $this->person = $person;
@@ -54,8 +59,8 @@ class BoatModel {
    * deletes a selected boat i a selected member
    */
   public function deleteBoat($id, $boatId) {
-    var_dump(3,$id);
-    var_dump(4,$boatId);
+    // var_dump(3,$id);
+    // var_dump(4,$boatId);
     $this->firebase->delete('/users' . '/' . $id . '/boats' . '/' . $boatId);
   }
 
@@ -63,6 +68,7 @@ class BoatModel {
    * updates a boat in a selected member 
    */
   public function updateBoatData($type, $length, $boatId, $id) {
+    
     $boatInformation = array(
       "Type" => $type,
       "length" => $length,
@@ -74,7 +80,7 @@ class BoatModel {
   /**
    * counts all boats in the selected member, if the member does not have a boat the set the the default value to 0
    * 
-   * @return Int
+   * 
    */
   public function countBoats($boatDataFromMember) {
     if($this->checkNull($boatDataFromMember) == false) {

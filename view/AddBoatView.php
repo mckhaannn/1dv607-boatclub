@@ -41,7 +41,7 @@ class AddBoatView
    * @return Bool
    */
   
-  public function lookForPost() : bool
+  public function lookForPost()
   {
     return isset($_POST[self::$addBoat]);
   }
@@ -53,7 +53,7 @@ class AddBoatView
    * @return String
    */
   
-  public function getBoatType() : string
+  public function getBoatType()
   {
     if (isset($_POST['option'])) {
       return $_POST['option'];
@@ -62,10 +62,10 @@ class AddBoatView
   /**
    * return the length of a boat
    * 
-   * @return Int
+   * @return 
    */
   
-  public function getLength() : int
+  public function getLength()
   {
     if (isset($_POST[self::$length])) {
       return $_POST[self::$length];
@@ -78,9 +78,11 @@ class AddBoatView
    * @return String
    */
   
-  public function getMemberId() : string
+  public function getMemberId()
   {
-    return $_POST['memberId'];
+    if (isset($_POST['memberId'])){
+      return $_POST['memberId'];
+    }
   }
   
 }

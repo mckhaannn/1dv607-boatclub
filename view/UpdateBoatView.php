@@ -16,7 +16,7 @@ class UpdateBoatView
     private static $type;
     private static $length;
     private static $id;
-    private static $personId;
+    private static $memberId;
 
 
     /**
@@ -31,6 +31,8 @@ class UpdateBoatView
         self::$type = $_POST['type'];
         self::$length = $_POST['length'];
         self::$id = $_POST['boatId'];
+        self::$memberId = $_POST['memberId'];
+
 
         return '
         <form method="post">
@@ -48,7 +50,8 @@ class UpdateBoatView
             </div>
             <div class="form-group">
                 <label class="form-text text-muted" ></label>ID</label>
-                <input  readonly class="form-control" id="' . self::$newId . '" name="' . self::$newId . '" value="' . self::$id . '">
+                <input class="form-control" id="' . self::$newMemberId . '" name="' . self::$newMemberId . '" value="' . self::$memberId . '" hidden>
+                <input readonly class="form-control" id="' . self::$newId . '" name="' . self::$newId . '" value="' . self::$id . '">
             </div>
             <input  class="btn btn-primary" type="submit" name="' . self::$updateBoat . '" value="updateBoat" />
             <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$goBack . '" value="back" />
@@ -62,7 +65,7 @@ class UpdateBoatView
      * @return Bool
      */
 
-    public function lookForPost() : bool
+    public function lookForPost()
     {
         return !empty($_POST[self::$updateBoat]);
     }
@@ -73,7 +76,7 @@ class UpdateBoatView
      * @return String
      */
 
-    public function getUpdatedType() : string
+    public function getUpdatedType() 
     {
         if (isset($_POST['option'])) {
             return $_POST['option'];
@@ -86,7 +89,7 @@ class UpdateBoatView
      * @return Int
      */
 
-    public function getUpdatedLength() : int
+    public function getUpdatedLength() 
     {
         if (isset($_POST[self::$newLength])) {
             return $_POST[self::$newLength];
@@ -99,10 +102,9 @@ class UpdateBoatView
      * @return String
      */
 
-    public function getBoatId() : string
+    public function getBoatId() 
     {
         if (isset($_POST[self::$newId])) {
-            var_dump(self::$newId);
             return $_POST[self::$newId];
         }
     }
@@ -113,7 +115,7 @@ class UpdateBoatView
      * @return String
      */
 
-    public function MemberId() : string
+    public function MemberId() 
     {
         if (isset($_POST[self::$newMemberId])) {
             return $_POST[self::$newMemberId];

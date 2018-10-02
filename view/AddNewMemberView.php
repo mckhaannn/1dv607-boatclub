@@ -67,7 +67,7 @@ class AddNewMemberView
      * 
      * @return Int
      */
-    public function getSocialSecurity()  : int
+    public function getSocialSecurity()
     {   
         if(isset($_POST[self::$socialSecurity])) {
          return $_POST[self::$socialSecurity];

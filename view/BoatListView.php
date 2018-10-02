@@ -64,7 +64,7 @@ class BoatListView {
       $type = $key['Type'];
       $length = $key['Length'];
       $id = $key['ID'];
-      $html .= $this->generateBoatList($type, $length, $id);
+      $html .= $this->generateBoatList($type, $length, $id, $this->getMemberId());
     }
     return $html;
   }
@@ -76,7 +76,7 @@ class BoatListView {
    * 
    * @return String
    */
-  public function generateBoatList($type, $length, $id)
+  public function generateBoatList($type, $length, $id, $memberId)
   {
       return '
         <form method="post">
@@ -89,6 +89,7 @@ class BoatListView {
         <input type="hidden" name="type" value="' . $type . '">
         <input type="hidden" name="boatId" value="' . $id . '">
         <input type="hidden" name="length" value="' . $length . '">
+        <input type="hidden" name="memberId" value="' . $memberId . '">
         <button  class="btn btn-primary btn-xs " type="submit" name="editBoat">edit</button>
         </td>
         <td>
@@ -104,7 +105,7 @@ class BoatListView {
    * 
    * @return String
    */
-  public function getMemberId() : string {    
+  public function getMemberId() {    
     if(isset($_POST['memberId'])) {
       return $_POST['memberId'];
     }

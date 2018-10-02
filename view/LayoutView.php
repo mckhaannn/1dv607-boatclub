@@ -20,14 +20,14 @@ class LayoutView
      * 
      * @return void
      */
-    public function getVariablesToLayoutView($memberView, $listOfMemberView, $addBoatView, $selectedViews, $updateMember, $updateBoat,$boatListView)
+    public function getVariablesToLayoutView($addNewMemberView, $listOfMemberView, $addBoatView, $selectedMemberView, $updateMemberView, $updateBoatView, $boatListView)
     {
-        $this->memberView = $memberView;
+        $this->addNewMemberView = $addNewMemberView;
         $this->listOfMemberView = $listOfMemberView;
+        $this->selectedMemberView = $selectedMemberView;
+        $this->updateMemberView = $updateMemberView;
+        $this->updateBoatView = $updateBoatView;
         $this->addBoatView = $addBoatView;
-        $this->selectedViews = $selectedViews;
-        $this->updateMember = $updateMember;
-        $this->updateBoat = $updateBoat;
         $this->boatListView = $boatListView;
     }
 
@@ -39,15 +39,15 @@ class LayoutView
     public function showLayout() {
         $html = "";
          if (isset($_POST['edit'])) {
-            $html .= $this->selectedViews->renderSelectedMember();
+            $html .= $this->selectedMemberView->renderSelectedMember();
             $html .= $this->boatListView->generateBoatTable();
-            $html .=$this->addBoatView->generateAddBoatForm();
+            $html .= $this->addBoatView->generateAddBoatForm();
         } else if (isset($_POST['updateUser'])) {
-            $html = $this->updateMember->renderUpdateMemberForm();
+            $html = $this->updateMemberView->renderUpdateMemberForm();
         } else if (isset($_POST['editBoat'])) {
-            $html = $this->updateBoat->generateUpdateBoatForm();
+            $html = $this->updateBoatView->generateUpdateBoatForm();
         } else {
-            $html .= $this->memberView->generateAddNewMemberForm();
+            $html .= $this->addNewMemberView->generateAddNewMemberForm();
             $html .= $this->listOfMemberView->generateInfoListHTML();
         }
         return $html;

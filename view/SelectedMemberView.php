@@ -50,7 +50,7 @@ class SelectedMemberView
   *
   * @return String
   */
-  public function getMemberId() : string
+  public function getMemberId()
   {
     if (isset($_POST['id'])) {
       return $_POST['id'];
@@ -62,7 +62,7 @@ class SelectedMemberView
    * 
    * @return String
    */
-  public function getBoatId() : string
+  public function getBoatId()
   {
     if (isset($_POST['boatId'])) {
       return $_POST['boatId'];

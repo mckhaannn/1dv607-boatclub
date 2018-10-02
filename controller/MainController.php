@@ -5,26 +5,39 @@ namespace controller;
 class MainController
 {
     private $memberController;
+    private $boatController;
     private $layoutView;
-    private $addNewaddNewMemberView;
-    private $listView;
-    private $boatView;
-    private $selectedView;
-    private $updateMember;
-    private $updateBoat;
+    private $addNewMemberView;
+    private $listOfMemberView;
+    private $addBoatView;
+    private $selectedmemberView;
+    private $updateMemberView;
+    private $updateBoatView;
     private $boatListView;
 
-    public function __construct(\controller\MemberController $memberController, \view\LayoutView $layoutView, \view\AddNewMemberView $addNewMemberView, \view\ListOfMemberView $listView, \view\AddBoatView $boatView, \view\SelectedMemberView $selectedView, \view\UpdateMemberView $updateMember, \view\UpdateBoatView $updateBoat, \view\BoatListView $boatListView)
+    public function __construct(
+        \controller\MemberController $memberController, 
+        \controller\BoatController $boatController,
+        \view\LayoutView $layoutView, 
+        \view\AddNewMemberView $addNewMemberView, 
+        \view\ListOfMemberView $listOfMemberView, 
+        \view\AddBoatView $addBoatView, 
+        \view\SelectedMemberView $selectedmemberView, 
+        \view\UpdateMemberView $updateMemberView, 
+        \view\UpdateBoatView $updateBoatView, 
+        \view\BoatListView $boatListView
+        )
     {
 
         $this->memberController = $memberController;
+        $this->boatController = $boatController;
         $this->layoutView = $layoutView;
         $this->addNewMemberView = $addNewMemberView;
-        $this->listView = $listView;
-        $this->boatView = $boatView;
-        $this->selectedView = $selectedView;
-        $this->updateMember = $updateMember;
-        $this->updateBoat = $updateBoat;
+        $this->listOfMemberView = $listOfMemberView;
+        $this->addBoatView = $addBoatView;
+        $this->selectedMemberView = $selectedmemberView;
+        $this->updateMemberView = $updateMemberView;
+        $this->updateBoatView = $updateBoatView;
         $this->boatListView = $boatListView;
 
     }
@@ -32,36 +45,36 @@ class MainController
     {
         $this->layoutView->getVariablesToLayoutView(
             $this->addNewMemberView,
-            $this->listView,
-            $this->boatView,
-            $this->selectedView,
-            $this->updateMember,
-            $this->updateBoat,
+            $this->listOfMemberView,
+            $this->addBoatView,
+            $this->selectedMemberView,
+            $this->updateMemberView,
+            $this->updateBoatView,
             $this->boatListView
         );
 
         if($this->addNewMemberView->lookForPost()) {
-            $this->memberController->controller();
+            $this->memberController->addMember();
         }
 
-        if($this->boatView->lookForPost()) {
-            $this->memberController->addBoat();
+        if($this->addBoatView->lookForPost()) {
+            $this->boatController->addBoat();
         }
 
-        if($this->updateMember->lookForPost()) {
+        if($this->updateMemberView->lookForPost()) {
             $this->memberController->editMember();
         }
 
-        if($this->listView->lookForPost()) {
+        if($this->listOfMemberView->lookForPost()) {
             $this->memberController->deleteMember();
         }
 
-        if($this->updateBoat->lookForPost()) {
-            $this->memberController->editBoat();
+        if($this->updateBoatView->lookForPost()) {
+            $this->boatController->editBoat();
         }
 
-        if($this->updateBoat->lookForDeletePost()) {
-            $this->memberController->deleteBoat();
+        if($this->updateBoatView->lookForDeletePost()) {
+            $this->boatController->deleteBoat();
         }
         
         $this->layoutView->renderLayoutView();    

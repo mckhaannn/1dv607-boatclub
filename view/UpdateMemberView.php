@@ -9,7 +9,7 @@ class UpdateMemberView
     private static $update = 'UpdateMember::Update';
     private static $newName = 'UpdateMember::newUserName';
     private static $newSocialSecurity = 'UpdateMember::newSocialSecurity';
-    private static $currentId = 'UpdateMember::currentId';
+    private static $newId = 'UpdateMember::newId';
 
 
     private static $name;
@@ -41,7 +41,7 @@ class UpdateMemberView
             </div>
             <div class="form-group">
                 <label class="form-text text-muted" ></label>ID</label>
-                <input  readonly class="form-control" id="' . self::$currentId . '" name="' . self::$currentId . '" value="' . self::$id . '">
+                <input  readonly class="form-control" id="' . self::$newId . '" name="' . self::$newId . '" value="' . self::$id . '">
             </div>
             <input  class="btn btn-primary" type="submit" name="' . self::$update . '" value="update" />
             <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$goBack . '" value="back" />
