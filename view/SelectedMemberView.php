@@ -52,8 +52,8 @@ class SelectedMemberView
   */
   public function getMemberId()
   {
-    if (isset($_POST['id'])) {
-      return $_POST['id'];
+    if (isset($_POST['memberId'])) {
+      return $_POST['memberId'];
     }
   }
 

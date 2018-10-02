@@ -43,7 +43,6 @@ class BoatController
   
   public function editBoat()
   {
-    var_dump($this->updateBoatView->MemberId());
     $this->boatModel->updateBoatData($this->updateBoatView->getUpdatedType(), $this->updateBoatView->getUpdatedLength(), $this->updateBoatView->getBoatId(), $this->updateBoatView->MemberId());
   }
 

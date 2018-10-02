@@ -19,16 +19,11 @@ class BoatModel {
     $this->firebase = $this->server->firebase(); 
   }
 
-  public function test() {
-    echo 'hi';
-  }
-
   /**
    * retrives data to use in other modules
    */
   public function reciveBoatData($type, $length, $person) {
     
-    // var_dump($type, $length, $person);
     $this->type = $type;
     $this->length = $length;
     $this->person = $person;
@@ -59,8 +54,6 @@ class BoatModel {
    * deletes a selected boat i a selected member
    */
   public function deleteBoat($id, $boatId) {
-    // var_dump(3,$id);
-    // var_dump(4,$boatId);
     $this->firebase->delete('/users' . '/' . $id . '/boats' . '/' . $boatId);
   }
 

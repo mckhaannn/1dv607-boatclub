@@ -90,9 +90,9 @@ class UpdateMemberView
      */
     public function getMemberId()
     {
-        if (isset($_POST[self::$currentId])) {
+        if (isset($_POST[self::$newId])) {
 
-            return $_POST[self::$currentId];
+            return $_POST[self::$newId];
         }
     }
 

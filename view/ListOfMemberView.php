@@ -29,19 +29,21 @@ class ListOfMemberView
         $memberData = json_decode($values, true);
 
         $html = "";
-        foreach ($memberData as $key) {
-            $this->member = $key['Name'];
-            $this->memberId = $key['ID'];
-            $this->socialSecurity = $key['SocialSecurity'];
-            $numberOfBoats = $this->boatModel->countBoats($this->boatModel->fetchBoatData($key['ID']));
-                        
-            if (isset($_GET['verbose'])) {
-                $html .= $this->generateMemberListVerbose($this->member, $this->memberId, $this->socialSecurity, $this->fetchBoatInformation($this->memberId));
-            } else {
-                $html .= $this->generateMemberListCompact($this->member, $this->memberId, $this->socialSecurity, $numberOfBoats);
-            }
-        };
-        return $html;
+        if($memberData != null) {
+            foreach ($memberData as $key) {
+                $this->member = $key['Name'];
+                $this->memberId = $key['ID'];
+                $this->socialSecurity = $key['SocialSecurity'];
+                $numberOfBoats = $this->boatModel->countBoats($this->boatModel->fetchBoatData($key['ID']));
+                            
+                if (isset($_GET['verbose'])) {
+                    $html .= $this->generateMemberListVerbose($this->member, $this->memberId, $this->socialSecurity, $this->fetchBoatInformation($this->memberId));
+                } else {
+                    $html .= $this->generateMemberListCompact($this->member, $this->memberId, $this->socialSecurity, $numberOfBoats);
+                }
+            };
+            return $html;
+        }
     }
     
     /**
@@ -245,7 +247,7 @@ class ListOfMemberView
     
     public function lookForPost() : bool
     {
-        return !empty($_POST[self::$delete]);
+        return isset($_POST[self::$delete]);
     }
 }
 
