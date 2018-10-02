@@ -2,7 +2,7 @@
 
 namespace model;
 
-require_once('database/firebase.php');
+require_once('model/firebase.php');
 
 class MemberModel {
 
@@ -14,7 +14,7 @@ class MemberModel {
    */
   public function __construct()
   {
-    $this->server = new \database\Server();
+    $this->server = new \model\Server();
     $this->firebase = $this->server->firebase();
   }
 
@@ -63,6 +63,7 @@ class MemberModel {
   /**
    * fetch all data from the database
    */
+  
   public function fetchData() {
     $value = $this->firebase->get('/users', array());
 

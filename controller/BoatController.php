@@ -30,7 +30,7 @@ class BoatController
    * adds a boat to a selected user
    */
   
-  public function addBoat()
+  public function routeToAddBoat()
   {
     $this->boatModel->reciveBoatData($this->addBoatView->getBoatType(), $this->addBoatView->getLength(), $this->addBoatView->getMemberId());
     $this->boatModel->addBoatToMember();
@@ -41,7 +41,7 @@ class BoatController
    * edit boat on a selected user
    */
   
-  public function editBoat()
+  public function routeToEditBoat()
   {
     $this->boatModel->updateBoatData($this->updateBoatView->getUpdatedType(), $this->updateBoatView->getUpdatedLength(), $this->updateBoatView->getBoatId(), $this->updateBoatView->MemberId());
   }
@@ -51,7 +51,7 @@ class BoatController
    * delete boat from a selected user
    */
 
-  public function deleteBoat()
+  public function routeToDeleteBoat()
   {
     $this->boatModel->deleteBoat($this->boatListView->getMemberId(), $this->boatListView->getBoatId());
   }

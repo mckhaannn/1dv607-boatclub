@@ -58,7 +58,7 @@ class MainController
          */
 
         if($this->addNewMemberView->lookForPost()) {
-            $this->memberController->addMember();
+            $this->memberController->routeToAddMember();
         }
 
         /**
@@ -66,7 +66,7 @@ class MainController
          */
 
         if($this->addBoatView->lookForPost()) {
-            $this->boatController->addBoat();
+            $this->boatController->routeToAddBoat();
         }
 
         /**
@@ -74,7 +74,7 @@ class MainController
          */
 
         if($this->updateMemberView->lookForPost()) {
-            $this->memberController->editMember();
+            $this->memberController->routeToEditMember();
         }
 
         /**
@@ -82,7 +82,7 @@ class MainController
          */
 
         if($this->listOfMemberView->lookForPost()) {
-            $this->memberController->deleteMember();
+            $this->memberController->routeToDeleteMember();
         }
 
         /**
@@ -90,7 +90,7 @@ class MainController
          */
 
         if($this->updateBoatView->lookForPost()) {
-            $this->boatController->editBoat();
+            $this->boatController->routeToEditBoat();
         }
 
         /**
@@ -98,14 +98,15 @@ class MainController
          */
 
         if($this->boatListView->lookForDeletePost()) {
-            $this->boatController->deleteBoat();
+            $this->boatController->routeToDeleteBoat();
         }
 
         /**
          * render start page view
          */
 
-        $this->layoutView->renderLayoutView();    
+        $this->layoutView->renderLayoutView(); 
+        
     }
  
 }

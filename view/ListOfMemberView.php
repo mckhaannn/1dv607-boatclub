@@ -23,6 +23,7 @@ class ListOfMemberView
      * 
      * @return String
      */
+
     private function generateMemberInfoList()
     {
         $values = $this->memberModel->fetchData();
@@ -51,7 +52,8 @@ class ListOfMemberView
      * fetch boat information for every member, only used on verbose list
      * 
      * @return String
-     */    
+     */  
+      
     private function fetchBoatInformation($MemberId)
     {
         $html = "";
@@ -237,7 +239,6 @@ class ListOfMemberView
           </div>
           ';
     }
-
 
     /**
      * check if member wants to delete

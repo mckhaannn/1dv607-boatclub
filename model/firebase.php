@@ -1,5 +1,5 @@
 <?php
-namespace database;
+namespace model;
 require_once "vendor/autoload.php";
 
 class Server {

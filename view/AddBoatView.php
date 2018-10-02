@@ -7,7 +7,6 @@ class AddBoatView
   private static $length = 'AddBoatView::length';
   private static $addBoat = 'AddBoatView::addBoat';
 
-
   /**
    * 
    * creates add boat form

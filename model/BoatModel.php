@@ -2,7 +2,7 @@
 
 namespace model;
 
-require_once('database/firebase.php');
+require_once('model/firebase.php');
 
 class BoatModel {
 
@@ -15,7 +15,7 @@ class BoatModel {
   */
   public function __construct()
   {
-    $this->server = new \database\Server();
+    $this->server = new \model\Server();
     $this->firebase = $this->server->firebase(); 
   }
 
@@ -42,9 +42,11 @@ class BoatModel {
     );
     $this->firebase->update('/users' . '/' . $this->person . '/boats' . '/' . $hash, $boatInfo);
   }
+
   /**
    * fetch all boat data from a selected member
    */
+
   public function fetchBoatData($id) {
     $value = $this->firebase->get('/users' . '/' . $id . '/boats', array());
     return $value;
@@ -53,6 +55,7 @@ class BoatModel {
   /**
    * deletes a selected boat i a selected member
    */
+
   public function deleteBoat($id, $boatId) {
     $this->firebase->delete('/users' . '/' . $id . '/boats' . '/' . $boatId);
   }
@@ -60,6 +63,7 @@ class BoatModel {
   /**
    * updates a boat in a selected member 
    */
+
   public function updateBoatData($type, $length, $boatId, $id) {
     
     $boatInformation = array(
@@ -75,6 +79,7 @@ class BoatModel {
    * 
    * 
    */
+
   public function countBoats($boatDataFromMember) {
     if($this->checkNull($boatDataFromMember) == false) {
       
@@ -93,6 +98,7 @@ class BoatModel {
   /**
    * check if a values is null
    */
+
   private function checkNull($value) {
      if ($value == null) {
        return true;

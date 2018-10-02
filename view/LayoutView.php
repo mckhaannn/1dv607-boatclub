@@ -10,10 +10,7 @@ class LayoutView
     private $selectedViews;
     private $updateMember;
     private $updateBoat;
-    public function __construct()
-    {
 
-    }
 
     /**
      * retrives values

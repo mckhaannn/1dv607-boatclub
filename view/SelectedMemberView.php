@@ -10,12 +10,6 @@ class SelectedMemberView
   private static $member;
   private static $id;
   private static $socialSecurity;
-  private $boatModel;
-
-  public function __construct(\model\BoatModel $boatModel)
-  {
-    $this->boatModel = $boatModel;
-  }
 
   /**
    * Display information on a selected member

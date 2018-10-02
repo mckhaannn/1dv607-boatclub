@@ -112,6 +112,7 @@ class BoatListView {
       return $_POST['memberId'];
     }
   }
+  
   public function getBoatId() {
     return $_POST['boatId'];
   }
