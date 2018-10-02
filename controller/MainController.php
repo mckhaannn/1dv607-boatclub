@@ -53,30 +53,58 @@ class MainController
             $this->boatListView
         );
 
+        /**
+         * redirect on post to add memeber
+         */
+
         if($this->addNewMemberView->lookForPost()) {
             $this->memberController->addMember();
         }
+
+        /**
+         * redirect on post to add boat
+         */
 
         if($this->addBoatView->lookForPost()) {
             $this->boatController->addBoat();
         }
 
+        /**
+         * redirect on post to delete member
+         */
+
         if($this->updateMemberView->lookForPost()) {
             $this->memberController->editMember();
         }
+
+        /**
+         * redirect on post to delete member
+         */
 
         if($this->listOfMemberView->lookForPost()) {
             $this->memberController->deleteMember();
         }
 
+        /**
+         * redirect on post to edit boat
+         */
+
         if($this->updateBoatView->lookForPost()) {
             $this->boatController->editBoat();
         }
 
-        if($this->updateBoatView->lookForDeletePost()) {
+        /**
+         * redirect on post to delete boat
+         */
+
+        if($this->boatListView->lookForDeletePost()) {
             $this->boatController->deleteBoat();
         }
-        
+
+        /**
+         * render start page view
+         */
+
         $this->layoutView->renderLayoutView();    
     }
  

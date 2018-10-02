@@ -110,5 +110,19 @@ class BoatListView {
       return $_POST['memberId'];
     }
   }
+  public function getBoatId() {
+    return $_POST['boatId'];
+  }
+  
+  /*
+  * check if member wants to delete
+  *
+  * @return 
+  */
+
+  public function lookForDeletePost() : bool
+  {
+      return isset($_POST[self::$deleteBoat]);
+  }
 
 }

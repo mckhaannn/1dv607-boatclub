@@ -2,7 +2,8 @@
 
 namespace controller;
 
-class BoatController {
+class BoatController
+{
 
   private $addBoatView;
   private $boatListView;
@@ -11,13 +12,12 @@ class BoatController {
   private $boatModel;
 
   public function __construct(
-    \view\AddBoatView $addBoatView, 
+    \view\AddBoatView $addBoatView,
     \model\BoatModel $boatModel,
-    \view\BoatListView $boatListView, 
+    \view\BoatListView $boatListView,
     \view\UpdateBoatView $updateBoatView,
-    \view\SelectedMemberView $selectedMemberView  
-    )
-  {
+    \view\SelectedMemberView $selectedMemberView
+  ) {
     $this->addBoatView = $addBoatView;
     $this->boatListView = $boatListView;
     $this->updateBoatView = $updateBoatView;
@@ -25,21 +25,35 @@ class BoatController {
     $this->boatModel = $boatModel;
   }
 
-  public function addBoat() {
-    // var_dump($this->addBoatView->getBoatType(), $this->addBoatView->getLength(), $this->addBoatView->getMemberId());
-    // $this->boatModel->reciveBoatData();
-    // $this->boatModel->test();
+  /**
+   * 
+   * adds a boat to a selected user
+   */
+  
+  public function addBoat()
+  {
     $this->boatModel->reciveBoatData($this->addBoatView->getBoatType(), $this->addBoatView->getLength(), $this->addBoatView->getMemberId());
     $this->boatModel->addBoatToMember();
   }
 
-  public function editBoat() {
-    var_dump($this->updateBoatView->MemberId());
-    $this->boatModel->updateBoatData($this->updateBoatView->getUpdatedType(),$this->updateBoatView->getUpdatedLength(), $this->updateBoatView->getBoatId(), $this->updateBoatView->MemberId());
-  }
+  /**
+   * 
+   * edit boat on a selected user
+   */
   
-  public function deleteBoat() {
-    $this->boatModel->deleteBoat($this->selectedMemberView->getId(), $this->selectedMemberView->boatId());
+  public function editBoat()
+  {
+    var_dump($this->updateBoatView->MemberId());
+    $this->boatModel->updateBoatData($this->updateBoatView->getUpdatedType(), $this->updateBoatView->getUpdatedLength(), $this->updateBoatView->getBoatId(), $this->updateBoatView->MemberId());
   }
 
+
+  /**
+   * delete boat from a selected user
+   */
+
+  public function deleteBoat()
+  {
+    $this->boatModel->deleteBoat($this->boatListView->getMemberId(), $this->boatListView->getBoatId());
+  }
 }

@@ -9,7 +9,6 @@ class UpdateBoatView
     private static $updateBoat = 'UpdateBoatView::updateBoat';
     private static $newType = 'UpdateBoatView::newType';
     private static $newLength = 'UpdateBoatView::newLength';
-    private static $deleteBoat = 'UpdateBoatView::deleteBoat';
     private static $newId = 'UpdateBoatView::newId';
     private static $newMemberId = 'UpdateBoatView::newMemberId';
 
@@ -122,15 +121,5 @@ class UpdateBoatView
         }
     }
 
-    /*
-     * check if member wants to delete
-     *
-     * @return 
-     */
-
-    public function lookForDeletePost() : bool
-    {
-        return isset($_POST[self::$deleteBoat]);
-
-    }
+ 
 }
