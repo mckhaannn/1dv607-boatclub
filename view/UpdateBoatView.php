@@ -11,6 +11,12 @@ class UpdateBoatView
     private static $newLength = 'UpdateBoatView::newLength';
     private static $newId = 'UpdateBoatView::newId';
     private static $newMemberId = 'UpdateBoatView::newMemberId';
+    
+    private static $optionPost = 'option';
+    private static $typePost = 'type';
+    private static $lengthPost = 'length';
+    private static $idPost = 'boatId';
+    private static $memberIdPost = 'memberId';
 
     private static $type;
     private static $length;
@@ -27,10 +33,10 @@ class UpdateBoatView
     public function generateUpdateBoatForm()
     {
 
-        self::$type = $_POST['type'];
-        self::$length = $_POST['length'];
-        self::$id = $_POST['boatId'];
-        self::$memberId = $_POST['memberId'];
+        self::$type = $_POST[self::$typePost];
+        self::$length = $_POST[self::$lengthPost];
+        self::$id = $_POST[self::$idPost];
+        self::$memberId = $_POST[self::$memberIdPost];
 
 
         return '
@@ -77,15 +83,15 @@ class UpdateBoatView
 
     public function getUpdatedType() 
     {
-        if (isset($_POST['option'])) {
-            return $_POST['option'];
+        if (isset($_POST[self::$optionPost])) {
+            return $_POST[self::$optionPost];
         }
     }
 
     /**
      * return the new length of the boat
      * 
-     * @return Int
+     * 
      */
 
     public function getUpdatedLength() 

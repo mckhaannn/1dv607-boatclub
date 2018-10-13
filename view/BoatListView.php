@@ -5,8 +5,9 @@ namespace view;
 class BoatListView {
 
   private static $deleteBoat = 'selectedMemberView::deleteBoat';
-  // private static $editBoat = 'selectedMemberView::editBoat';
   private $boatModel;
+  private static $memberIdPost = 'memberId';
+  private static $boatIdPost = 'boatId';
   
   public function __construct(\model\BoatModel $boatModel)
   {
@@ -74,7 +75,7 @@ class BoatListView {
 
   /**
    * 
-   * creates a list of boats
+   * Creates a list of boats
    * 
    * @return String
    */
@@ -108,13 +109,13 @@ class BoatListView {
    * @return String
    */
   public function getMemberId() {    
-    if(isset($_POST['memberId'])) {
-      return $_POST['memberId'];
+    if(isset($_POST[self::$memberIdPost])) {
+      return $_POST[self::$memberIdPost];
     }
   }
   
   public function getBoatId() {
-    return $_POST['boatId'];
+    return $_POST[self::$boatIdPost];
   }
   
   /*

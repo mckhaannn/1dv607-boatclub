@@ -27,22 +27,27 @@ class MemberController {
    */
   
   public function routeToAddMember() {
+    if($this->memberView->isSocialSecurityValid() && $this->memberView->checkSocialSecurityLength()) {
       $this->memberModel->reciveMemberData($this->memberView->getName(), $this->memberView->getSocialSecurity());
       $this->memberModel->addNewMemberToDatabase();
+    }
   }
   
   /**
    * send member info to model and delete the selected member
    */
+
   public function routeToDeleteMember() {
     $this->memberModel->deleteMember($this->selectedMemberView->getMemberId());
   }
-
+  
   /**
-   * 
    * gives model information to update a selected member
    */
+  
   public function routeToEditMember() {
-    $this->memberModel->updateMemberData($this->updateMember->getUpdatedName(), $this->updateMember->getUpdatedSocialSecurity(), $this->updateMember->getMemberId());
+    if($this->updateMember->isSocialSecurityValid() && $this->updateMember->checkSocialSecurityLength()) {
+      $this->memberModel->updateMemberData($this->updateMember->getUpdatedName(), $this->updateMember->getUpdatedSocialSecurity(), $this->updateMember->getMemberId());
+    }
   }
 }

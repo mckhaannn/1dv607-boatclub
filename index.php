@@ -14,9 +14,9 @@ require_once 'view/SelectedMemberView.php';
 require_once 'view/UpdateBoatView.php';
 require_once 'view/UpdateMemberView.php';
 
-//MAKE SURE ERRORS ARE SHOWN.sd MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
-// error_reporting(E_ALL);
-// ini_set('display_errors', 'On');
+// MAKE SURE ERRORS ARE SHOWN.sd MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
 //CREATE OBJECTS OF THE VIEWS
 $boatModel = new \model\BoatModel();

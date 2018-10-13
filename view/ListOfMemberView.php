@@ -7,6 +7,12 @@ class ListOfMemberView
     private static $delete = 'ListOfMemberView::delete';
     private static $edit = 'ListOfMemberView::edit';
 
+    private static $nameKey = 'Name';
+    private static $idKey = 'ID';
+    private static $socialSecurityKey = 'SocialSecurity';
+    private static $typeKey = 'Type';
+    private static $lengthKey = 'Length';
+
 
     private $memberModel;
     private $boatModel;
@@ -32,10 +38,10 @@ class ListOfMemberView
         $html = "";
         if($memberData != null) {
             foreach ($memberData as $key) {
-                $this->member = $key['Name'];
-                $this->memberId = $key['ID'];
-                $this->socialSecurity = $key['SocialSecurity'];
-                $numberOfBoats = $this->boatModel->countBoats($this->boatModel->fetchBoatData($key['ID']));
+                $this->member = $key[self::$nameKey];
+                $this->memberId = $key[self::$idKey];
+                $this->socialSecurity = $key[self::$socialSecurityKey];
+                $numberOfBoats = $this->boatModel->countBoats($this->boatModel->fetchBoatData($key[self::$idKey]));
                             
                 if (isset($_GET['verbose'])) {
                     $html .= $this->generateMemberListVerbose($this->member, $this->memberId, $this->socialSecurity, $this->fetchBoatInformation($this->memberId));
@@ -61,9 +67,9 @@ class ListOfMemberView
         $decodedBoatInfo = json_decode($boatInfo, true);
         if ($decodedBoatInfo != null) {
             foreach ($decodedBoatInfo as $key) {
-                $type = $key['Type'];
-                $length = $key['Length'];
-                $boatId = $key['ID'];
+                $type = $key[self::$typeKey];
+                $length = $key[self::$lengthKey];
+                $boatId = $key[self::$idKey];
                 $html .= $this->boatInfoBox($type, $length, $boatId);
             }
             return $html;
@@ -111,7 +117,7 @@ class ListOfMemberView
             <th></th>
             <th>Boats</th>
             <th></th>
-            <th>Edit</th>
+            <th>View</th>
             <th>Delete</th>
             ';
         } else {
@@ -120,7 +126,7 @@ class ListOfMemberView
             <th>ID</th>
             <th> Number of boats</th>
             <th></th>
-            <th>Edit</th>
+            <th>View</th>
             <th>Delete</th>
             ';
 
@@ -148,7 +154,7 @@ class ListOfMemberView
           <input type="hidden" name="member" value="' . $member . '">
           <input type="hidden" name="memberId" value="' . $memberId . '">
           <input type="hidden" name="socialSecurity" value="' . $socialSecurity . '">
-          <input  class="btn btn-primary btn-xs " type="submit" name="edit" value="edit"
+          <input  class="btn btn-primary btn-xs " type="submit" name="edit" value="view">
           </td>
           <td>
           <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$delete . '" value="delete" />
@@ -182,7 +188,7 @@ class ListOfMemberView
         <input type="hidden" name="socialSecurity" value="' . $socialSecurity . '">
          </td>
         <td>
-        <input  class="btn btn-primary btn-xs " type="submit" name="edit" value="edit"/>     
+        <input  class="btn btn-primary btn-xs " type="submit" name="edit" value="view"/>     
         </td>
         <td>
         <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$delete . '" value="delete" />

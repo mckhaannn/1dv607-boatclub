@@ -4,13 +4,18 @@ namespace view;
 
 class LayoutView
 {
+    private static $editPost = 'edit';
+    private static $updateUserPost = 'updateUser';
+    private static $editBoatPost = 'editBoat';
+
+    private const EMPTY_STRING = '';
+
     private $memberView;
     private $listOfMemberView;
     private $addBoatView;
     private $selectedViews;
     private $updateMember;
     private $updateBoat;
-
 
     /**
      * retrives values
@@ -34,14 +39,14 @@ class LayoutView
      * @return String
      */
     public function showLayout() {
-        $html = "";
-         if (isset($_POST['edit'])) {
+        $html = self::EMPTY_STRING;
+         if (isset($_POST[self::$editPost])) {
             $html .= $this->selectedMemberView->renderSelectedMember();
             $html .= $this->boatListView->generateBoatTable();
             $html .= $this->addBoatView->generateAddBoatForm();
-        } else if (isset($_POST['updateUser'])) {
+        } else if (isset($_POST[self::$updateUserPost])) {
             $html = $this->updateMemberView->renderUpdateMemberForm();
-        } else if (isset($_POST['editBoat'])) {
+        } else if (isset($_POST[self::$editBoatPost])) {
             $html = $this->updateBoatView->generateUpdateBoatForm();
         } else {
             $html .= $this->addNewMemberView->generateAddNewMemberForm();

@@ -6,6 +6,11 @@ require_once('model/firebase.php');
 
 class BoatModel {
 
+  private const NUMBER_SMALL = 1;
+  private const NUMBER_BIG = 999;
+  private const DEFAULT_BOATS = 0;
+
+
   private $type;
   private $length;
   private $person;
@@ -34,7 +39,7 @@ class BoatModel {
    * adds a boat to a selected member in the database
    */
   public function addBoatToMember() {
-    $hash = md5($this->type . $this->length . rand(1, 999));
+    $hash = md5($this->type . $this->length . rand(self::NUMBER_SMALL, self::NUMBER_BIG));
     $boatInfo = array(
       "Type" => $this->type,
       "Length" => $this->length,
@@ -68,14 +73,14 @@ class BoatModel {
     
     $boatInformation = array(
       "Type" => $type,
-      "length" => $length,
+      "Length" => $length,
     );
     $this->firebase->update('/users' . '/' . $id . '/boats' . '/' . $boatId, $boatInformation);
   }
 
 
   /**
-   * counts all boats in the selected member, if the member does not have a boat the set the the default value to 0
+   * counts all boats in the selected member, if the member does not have a boat set the the default value to 0
    * 
    * 
    */
@@ -86,7 +91,7 @@ class BoatModel {
       $boatArray = json_decode($boatDataFromMember, true);
       
       if($this->checkNull($boatArray) == true) {
-        $ammounOfBoats = 0;
+        $ammounOfBoats = self::DEFAULT_BOATS;
         return $ammounOfBoats;
       }
       

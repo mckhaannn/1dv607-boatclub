@@ -6,6 +6,8 @@ class AddBoatView
 {
   private static $length = 'AddBoatView::length';
   private static $addBoat = 'AddBoatView::addBoat';
+  private static $optionPost = 'option';
+  private static $memberIdPost = 'memberId';
 
   /**
    * 
@@ -54,8 +56,8 @@ class AddBoatView
   
   public function getBoatType()
   {
-    if (isset($_POST['option'])) {
-      return $_POST['option'];
+    if (isset($_POST[self::$optionPost])) {
+      return $_POST[self::$optionPost];
     }
   }
   /**
@@ -79,8 +81,8 @@ class AddBoatView
   
   public function getMemberId()
   {
-    if (isset($_POST['memberId'])){
-      return $_POST['memberId'];
+    if (isset($_POST[self::$memberIdPost])){
+      return $_POST[self::$memberIdPost];
     }
   }
   

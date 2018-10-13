@@ -9,12 +9,43 @@ class UpdateMemberView
     private static $update = 'UpdateMember::Update';
     private static $newName = 'UpdateMember::newUserName';
     private static $newSocialSecurity = 'UpdateMember::newSocialSecurity';
+    private static $message = 'UpdateMember::Message';
     private static $newId = 'UpdateMember::newId';
+    private static $namePost = 'name';
+    private static $idPost = 'id';
+    private static $socialSecurityPost = 'socialSecurity';
 
+    private const SOCIALSECURITY_IS_NAN_MESSAGE = 'Social security must be a number!';
+    private const SOCIALSECURTY_LENGTH_NOT_VALID_MESSAGE = 'Social security must be 12 digits';
+    private const EMPTY_STRING = '';
+    private const SOCIALSECURITY_LENGTH = 12;
+    private const VALUE_ZERO = 0;
 
     private static $name;
     private static $id;
     private static $socialSecurity;
+
+
+
+    public function renderUpdateMemberForm() {
+        $message = $this->getMessage();
+        $response = $this->render($message);
+        return $response;
+    }
+
+    public function getMessage() {
+        $message     = self::EMPTY_STRING;
+        if(isset($_POST[self::$update])) {
+            if(!$this->checkSocialSecurityLength()) {
+            $message = self::SOCIALSECURTY_LENGTH_NOT_VALID_MESSAGE;
+            } else if(!$this->isSocialSecurityValid()) {
+                $message = self::SOCIALSECURITY_IS_NAN_MESSAGE; 
+            } else {
+                $message = self::EMPTY_STRING;
+            }
+        }
+        return $message;
+    }
 
 
     /**
@@ -22,12 +53,12 @@ class UpdateMemberView
      * 
      * @return String
      */
-    public function renderUpdateMemberForm()
+    public function render($message)
     {
 
-        self::$name = $_POST['name'];
-        self::$id = $_POST['id'];
-        self::$socialSecurity = $_POST['socialSecurity'];
+        self::$name = $_POST[self::$namePost];
+        self::$id = $_POST[self::$idPost];
+        self::$socialSecurity = $_POST[self::$socialSecurityPost];
 
         return '
         <form method="post">
@@ -38,6 +69,7 @@ class UpdateMemberView
             <div class="form-group">
                 <label class="form-text text-muted" ></label>Social Security Number</label>
                 <input  class="form-control" id="' . self::$newSocialSecurity . '" name="' . self::$newSocialSecurity . '" value="' . self::$socialSecurity . '">
+                <small id="' . self::$message . '" class="form-text text-muted">' . $message . '</small>
             </div>
             <div class="form-group">
                 <label class="form-text text-muted" ></label>ID</label>
@@ -95,6 +127,27 @@ class UpdateMemberView
             return $_POST[self::$newId];
         }
     }
+
+    /**
+     * return true if social security only contains numbers
+     * @return bool
+     */
+    public function isSocialSecurityValid() {
+        $value = $_POST[self::$newSocialSecurity];
+        if(is_numeric($value) && $value > self::VALUE_ZERO && $value == round($value, self::VALUE_ZERO)) {
+            return true;
+        }
+    }
+
+    /**
+     * social security must be 12 numbers
+     * 
+     * @return bool
+     */
+    public function checkSocialSecurityLength() {
+        return strlen($_POST[self::$newSocialSecurity]) == self::SOCIALSECURITY_LENGTH;
+    }
+
 
 }
 

@@ -10,6 +10,10 @@ class SelectedMemberView
   private static $member;
   private static $id;
   private static $socialSecurity;
+  private static $memberPost = 'member';
+  private static $memberIdPost = 'memberId';
+  private static $socialSecurityPost = 'socialSecurity';
+  private static $boatIdPost = 'boatId';
 
   /**
    * Display information on a selected member
@@ -18,9 +22,9 @@ class SelectedMemberView
    */
   public function renderSelectedMember()
   {
-    self::$member = $_POST['member'];
-    self::$id = $_POST['memberId'];
-    self::$socialSecurity = $_POST['socialSecurity'];
+    self::$member = $_POST[self::$memberPost];
+    self::$id = $_POST[self::$memberIdPost];
+    self::$socialSecurity = $_POST[self::$socialSecurityPost];
 
     return '
       <form method="post">
@@ -46,8 +50,8 @@ class SelectedMemberView
   */
   public function getMemberId()
   {
-    if (isset($_POST['memberId'])) {
-      return $_POST['memberId'];
+    if (isset($_POST[self::$memberIdPost])) {
+      return $_POST[self::$memberIdPost];
     }
   }
 
@@ -58,8 +62,8 @@ class SelectedMemberView
    */
   public function getBoatId()
   {
-    if (isset($_POST['boatId'])) {
-      return $_POST['boatId'];
+    if (isset($_POST[self::$boatIdPost])) {
+      return $_POST[self::$boatIdPost];
     }
   }
 
