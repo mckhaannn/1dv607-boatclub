@@ -22,8 +22,8 @@ namespace BlackJack.controller
       int input = a_view.GetInput();
 
 
-switch (input)
-{
+    switch (input)
+    {
     case (int)view.Alternatives.play:
         a_game.NewGame();
         break;
@@ -36,24 +36,9 @@ switch (input)
     default:
         break;
     
-}
+    }
     return input != (int)view.Alternatives.quit;
-      
-    //   if (input == (int)view.Alternatives.play)
-    //   {
-    //     a_game.NewGame();
-    //   }
-    //   else if (input == (int)view.Alternatives.hit)
-    //   {
-    //     a_game.Hit();
-    //   }
-    //   else if (input == (int)view.Alternatives.stand)
-    //   {
-    //     a_game.Stand();
-    //   }
 
-    //   return input != (int)view.Alternatives.quit;
-  
-     }
+    }
   }
 }

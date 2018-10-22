@@ -55,7 +55,7 @@ namespace BlackJack.model
                     }
                 }
             }
-
+        
             return score;
         }
     }

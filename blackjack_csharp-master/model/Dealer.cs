@@ -13,10 +13,13 @@ namespace BlackJack.model
     private rules.INewGameStrategy m_newGameRule;
     private rules.IHitStrategy m_hitRule;
 
+    private rules.IWinnerStrategy m_winRule;
+
     public Dealer(rules.RulesFactory a_rulesFactory)
     {
       m_newGameRule = a_rulesFactory.GetNewGameRule();
       m_hitRule = a_rulesFactory.GetHitRule();
+      m_winRule = a_rulesFactory.GetWinnerRule();
     }
 
     public bool NewGame(Player a_player)
@@ -33,7 +36,7 @@ namespace BlackJack.model
 
     public bool Hit(Player a_player)
     {
-      if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver())
+      if (m_deck != null && m_hitRule.DoHit(this) && !IsGameOver())
       {
         Card c;
         c = m_deck.GetCard();
@@ -55,35 +58,35 @@ namespace BlackJack.model
       {
         return false;
       }
-      return CalcScore() >= a_player.CalcScore();
+      return m_winRule.isWinner(a_player, CalcScore());
     }
 
     public bool IsGameOver()
     {
-      if (m_deck != null && /*CalcScore() >= g_hitLimit*/ m_hitRule.DoHit(this) != true)
-      {
-        return true;
-      }
-      return false;
+        if (m_deck != null && /*CalcScore() >= g_hitLimit*/ m_hitRule.DoHit(this) != true)
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool Stand()
     {
-      if (m_deck != null)
-      {
-        ShowHand();
-        while (m_hitRule.DoHit(this))
+        if (m_deck != null)
         {
-
-          Card c;
-          m_hitRule.DoHit(this);
-          c = m_deck.GetCard();
-          c.Show(false);
-          DealCard(c);
+            ShowHand();
+            Card c;
+            while (m_hitRule.DoHit(this))
+            {
+                m_hitRule.DoHit(this);
+                c = m_deck.GetCard();
+                c.Show(true);
+                DealCard(c);
+            }
+            return true;
         }
-        return true;
-      }
-      return false;
+        return false;
     }
+
   }
 }
