@@ -21,20 +21,39 @@ namespace BlackJack.controller
 
       int input = a_view.GetInput();
 
-      if (input == 'p')
-      {
-        a_game.NewGame();
-      }
-      else if (input == 'h')
-      {
-        a_game.Hit();
-      }
-      else if (input == 's')
-      {
-        a_game.Stand();
-      }
 
-      return input != 'q';
-    }
+switch (input)
+{
+    case (int)view.Alternatives.play:
+        a_game.NewGame();
+        break;
+    case (int)view.Alternatives.hit:
+        a_game.Hit();
+        break;
+    case (int)view.Alternatives.stand:
+        a_game.Stand();
+        break;
+    default:
+        break;
+    
+}
+    return input != (int)view.Alternatives.quit;
+      
+    //   if (input == (int)view.Alternatives.play)
+    //   {
+    //     a_game.NewGame();
+    //   }
+    //   else if (input == (int)view.Alternatives.hit)
+    //   {
+    //     a_game.Hit();
+    //   }
+    //   else if (input == (int)view.Alternatives.stand)
+    //   {
+    //     a_game.Stand();
+    //   }
+
+    //   return input != (int)view.Alternatives.quit;
+  
+     }
   }
 }
