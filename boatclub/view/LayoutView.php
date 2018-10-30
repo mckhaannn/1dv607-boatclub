@@ -38,9 +38,10 @@ class LayoutView
      * 
      * @return String
      */
-    public function showLayout() {
+    public function showLayout()
+    {
         $html = self::EMPTY_STRING;
-         if (isset($_POST[self::$editPost])) {
+        if (isset($_POST[self::$editPost])) {
             $html .= $this->selectedMemberView->renderSelectedMember();
             $html .= $this->boatListView->generateBoatTable();
             $html .= $this->addBoatView->generateAddBoatForm();
@@ -61,7 +62,7 @@ class LayoutView
      * 
      * @return echo
      */
-    
+
     public function renderLayoutView()
     {
         echo '<!DOCTYPE html>

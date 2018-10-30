@@ -17,19 +17,21 @@ class AddNewMemberView
     private const VALUE_ZERO = 0;
 
 
-    public function generateAddNewMemberForm() {
+    public function generateAddNewMemberForm()
+    {
         $message = $this->getMessage();
         $response = $this->render($message);
         return $response;
     }
 
-    public function getMessage() {
+    public function getMessage()
+    {
         $message = self::EMPTY_STRING;
-        if(isset($_POST[self::$add])) {
-            if(!$this->checkSocialSecurityLength()) {
-            $message = self::SOCIALSECURTY_LENGTH_NOT_VALID_MESSAGE;
-            } else if(!$this->isSocialSecurityValid()) {
-                $message = self::SOCIALSECURITY_IS_NAN_MESSAGE; 
+        if (isset($_POST[self::$add])) {
+            if (!$this->checkSocialSecurityLength()) {
+                $message = self::SOCIALSECURTY_LENGTH_NOT_VALID_MESSAGE;
+            } else if (!$this->isSocialSecurityValid()) {
+                $message = self::SOCIALSECURITY_IS_NAN_MESSAGE;
             } else {
                 $message = self::EMPTY_STRING;
             }
@@ -86,7 +88,7 @@ class AddNewMemberView
      */
     public function getName()
     {
-        if(isset($_POST[self::$name])) {
+        if (isset($_POST[self::$name])) {
             return $_POST[self::$name];
         }
     }
@@ -97,20 +99,20 @@ class AddNewMemberView
      * @return Int
      */
     public function getSocialSecurity()
-    {   
-        if(isset($_POST[self::$socialSecurity])) {
-         return $_POST[self::$socialSecurity];
-    
+    {
+        if (isset($_POST[self::$socialSecurity])) {
+            return $_POST[self::$socialSecurity];
+
         }
     }
 
     /**
-     * return true if social security only contains numbers
-     * @return bool
+     * return true if social security only contains number
      */
-    public function isSocialSecurityValid() : bool {
+    public function isSocialSecurityValid()
+    {
         $value = $_POST[self::$socialSecurity];
-        if(is_numeric($value) && $value > 0 && $value == round($value, self::VALUE_ZERO)) {
+        if (is_numeric($value) && $value > 0 && $value == round($value, self::VALUE_ZERO)) {
             return true;
         }
     }
@@ -120,8 +122,14 @@ class AddNewMemberView
      * 
      * @return bool
      */
-    public function checkSocialSecurityLength() : bool {
+    public function checkSocialSecurityLength() : bool
+    {
         return strlen($_POST[self::$socialSecurity]) == self::SOCIALSECURITY_LENGTH;
+    }
+
+    public function getCreatedMember($id)
+    {
+        return new \model\Member($this->getName(), $this->getSocialSecurity(), $id);
     }
 
 }

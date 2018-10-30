@@ -11,7 +11,7 @@ class UpdateBoatView
     private static $newLength = 'UpdateBoatView::newLength';
     private static $newId = 'UpdateBoatView::newId';
     private static $newMemberId = 'UpdateBoatView::newMemberId';
-    
+
     private static $optionPost = 'option';
     private static $typePost = 'type';
     private static $lengthPost = 'length';
@@ -29,7 +29,7 @@ class UpdateBoatView
      * 
      * @return String
      */
-    
+
     public function generateUpdateBoatForm()
     {
 
@@ -81,7 +81,7 @@ class UpdateBoatView
      * @return String
      */
 
-    public function getUpdatedType() 
+    public function getUpdatedType()
     {
         if (isset($_POST[self::$optionPost])) {
             return $_POST[self::$optionPost];
@@ -94,7 +94,7 @@ class UpdateBoatView
      * 
      */
 
-    public function getUpdatedLength() 
+    public function getUpdatedLength()
     {
         if (isset($_POST[self::$newLength])) {
             return $_POST[self::$newLength];
@@ -107,25 +107,28 @@ class UpdateBoatView
      * @return String
      */
 
-    public function getBoatId() 
+    public function getBoatId()
     {
         if (isset($_POST[self::$newId])) {
             return $_POST[self::$newId];
         }
     }
-    
+
     /**
      * return member id
      * 
      * @return String
      */
 
-    public function MemberId() 
+    public function MemberId()
     {
         if (isset($_POST[self::$newMemberId])) {
             return $_POST[self::$newMemberId];
         }
     }
 
- 
+    public function getUpdatedBoat()
+    {
+        return new \model\Boat($this->getUpdatedType(), $this->getUpdatedLength(), $this->getBoatId());
+    }
 }

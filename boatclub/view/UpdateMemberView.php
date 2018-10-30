@@ -27,19 +27,21 @@ class UpdateMemberView
 
 
 
-    public function renderUpdateMemberForm() {
+    public function renderUpdateMemberForm()
+    {
         $message = $this->getMessage();
         $response = $this->render($message);
         return $response;
     }
 
-    public function getMessage() {
-        $message     = self::EMPTY_STRING;
-        if(isset($_POST[self::$update])) {
-            if(!$this->checkSocialSecurityLength()) {
-            $message = self::SOCIALSECURTY_LENGTH_NOT_VALID_MESSAGE;
-            } else if(!$this->isSocialSecurityValid()) {
-                $message = self::SOCIALSECURITY_IS_NAN_MESSAGE; 
+    public function getMessage()
+    {
+        $message = self::EMPTY_STRING;
+        if (isset($_POST[self::$update])) {
+            if (!$this->checkSocialSecurityLength()) {
+                $message = self::SOCIALSECURTY_LENGTH_NOT_VALID_MESSAGE;
+            } else if (!$this->isSocialSecurityValid()) {
+                $message = self::SOCIALSECURITY_IS_NAN_MESSAGE;
             } else {
                 $message = self::EMPTY_STRING;
             }
@@ -132,9 +134,10 @@ class UpdateMemberView
      * return true if social security only contains numbers
      * @return bool
      */
-    public function isSocialSecurityValid() {
+    public function isSocialSecurityValid()
+    {
         $value = $_POST[self::$newSocialSecurity];
-        if(is_numeric($value) && $value > self::VALUE_ZERO && $value == round($value, self::VALUE_ZERO)) {
+        if (is_numeric($value) && $value > self::VALUE_ZERO && $value == round($value, self::VALUE_ZERO)) {
             return true;
         }
     }
@@ -144,8 +147,14 @@ class UpdateMemberView
      * 
      * @return bool
      */
-    public function checkSocialSecurityLength() {
+    public function checkSocialSecurityLength()
+    {
         return strlen($_POST[self::$newSocialSecurity]) == self::SOCIALSECURITY_LENGTH;
+    }
+
+    public function getUpdatedMember()
+    {
+        return new \model\Member($this->getUpdatedName(), $this->getUpdatedSocialSecurity(), $this->getMemberId());
     }
 
 

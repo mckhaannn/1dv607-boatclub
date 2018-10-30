@@ -16,18 +16,17 @@ class MainController
     private $boatListView;
 
     public function __construct(
-        \controller\MemberController $memberController, 
+        \controller\MemberController $memberController,
         \controller\BoatController $boatController,
-        \view\LayoutView $layoutView, 
-        \view\AddNewMemberView $addNewMemberView, 
-        \view\ListOfMemberView $listOfMemberView, 
-        \view\AddBoatView $addBoatView, 
-        \view\SelectedMemberView $selectedmemberView, 
-        \view\UpdateMemberView $updateMemberView, 
-        \view\UpdateBoatView $updateBoatView, 
+        \view\LayoutView $layoutView,
+        \view\AddNewMemberView $addNewMemberView,
+        \view\ListOfMemberView $listOfMemberView,
+        \view\AddBoatView $addBoatView,
+        \view\SelectedMemberView $selectedmemberView,
+        \view\UpdateMemberView $updateMemberView,
+        \view\UpdateBoatView $updateBoatView,
         \view\BoatListView $boatListView
-        )
-    {
+    ) {
 
         $this->memberController = $memberController;
         $this->boatController = $boatController;
@@ -57,7 +56,7 @@ class MainController
          * redirect on post to add memeber
          */
 
-        if($this->addNewMemberView->lookForPost()) {
+        if ($this->addNewMemberView->lookForPost()) {
             $this->memberController->routeToAddMember();
         }
 
@@ -65,7 +64,7 @@ class MainController
          * redirect on post to add boat
          */
 
-        if($this->addBoatView->lookForPost()) {
+        if ($this->addBoatView->lookForPost()) {
             $this->boatController->routeToAddBoat();
         }
 
@@ -73,7 +72,7 @@ class MainController
          * redirect on post to delete member
          */
 
-        if($this->updateMemberView->lookForPost()) {
+        if ($this->updateMemberView->lookForPost()) {
             $this->memberController->routeToEditMember();
         }
 
@@ -81,7 +80,7 @@ class MainController
          * redirect on post to delete member
          */
 
-        if($this->listOfMemberView->lookForPost()) {
+        if ($this->listOfMemberView->lookForPost()) {
             $this->memberController->routeToDeleteMember();
         }
 
@@ -89,7 +88,7 @@ class MainController
          * redirect on post to edit boat
          */
 
-        if($this->updateBoatView->lookForPost()) {
+        if ($this->updateBoatView->lookForPost()) {
             $this->boatController->routeToEditBoat();
         }
 
@@ -97,7 +96,7 @@ class MainController
          * redirect on post to delete boat
          */
 
-        if($this->boatListView->lookForDeletePost()) {
+        if ($this->boatListView->lookForDeletePost()) {
             $this->boatController->routeToDeleteBoat();
         }
 
@@ -105,8 +104,8 @@ class MainController
          * render start page view
          */
 
-        $this->layoutView->renderLayoutView(); 
-        
+        $this->layoutView->renderLayoutView();
+
     }
- 
+
 }

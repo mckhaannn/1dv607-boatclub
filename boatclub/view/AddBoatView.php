@@ -2,6 +2,8 @@
 
 namespace view;
 
+require_once('model/Boat.php');
+
 class AddBoatView
 {
   private static $length = 'AddBoatView::length';
@@ -41,7 +43,7 @@ class AddBoatView
    * 
    * @return Bool
    */
-  
+
   public function lookForPost()
   {
     return isset($_POST[self::$addBoat]);
@@ -53,7 +55,7 @@ class AddBoatView
    * 
    * @return String
    */
-  
+
   public function getBoatType()
   {
     if (isset($_POST[self::$optionPost])) {
@@ -65,7 +67,7 @@ class AddBoatView
    * 
    * @return 
    */
-  
+
   public function getLength()
   {
     if (isset($_POST[self::$length])) {
@@ -78,12 +80,17 @@ class AddBoatView
    * 
    * @return String
    */
-  
+
   public function getMemberId()
   {
-    if (isset($_POST[self::$memberIdPost])){
+    if (isset($_POST[self::$memberIdPost])) {
       return $_POST[self::$memberIdPost];
     }
   }
-  
+
+  public function getCreatedBoat($id)
+  {
+    return new \model\Boat($this->getBoatType(), $this->getLength(), $id);
+  }
+
 }

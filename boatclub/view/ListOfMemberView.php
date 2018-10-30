@@ -16,7 +16,7 @@ class ListOfMemberView
 
     private $memberModel;
     private $boatModel;
-    
+
     public function __construct(\model\MemberModel $memberModel, \model\boatModel $boatModel)
     {
         $this->memberModel = $memberModel;
@@ -32,48 +32,46 @@ class ListOfMemberView
 
     private function generateMemberInfoList()
     {
-        $values = $this->memberModel->fetchData();
-        $memberData = json_decode($values, true);
+        $html = '';
+        $member = $this->memberModel->getMemberList();
+        foreach ($member as $key) {
+            $this->member = $key->getName();
+            $this->memberId = $key->getId();
+            $this->socialSecurity = $key->getSocialSecurity();
 
-        $html = "";
-        if($memberData != null) {
-            foreach ($memberData as $key) {
-                $this->member = $key[self::$nameKey];
-                $this->memberId = $key[self::$idKey];
-                $this->socialSecurity = $key[self::$socialSecurityKey];
-                $numberOfBoats = $this->boatModel->countBoats($this->boatModel->fetchBoatData($key[self::$idKey]));
-                            
-                if (isset($_GET['verbose'])) {
-                    $html .= $this->generateMemberListVerbose($this->member, $this->memberId, $this->socialSecurity, $this->fetchBoatInformation($this->memberId));
-                } else {
-                    $html .= $this->generateMemberListCompact($this->member, $this->memberId, $this->socialSecurity, $numberOfBoats);
-                }
-            };
-            return $html;
+            $numberOfBoats = $this->boatModel->countBoats($this->memberId);
+
+            if (isset($_GET['verbose'])) {
+                $html .= $this->generateMemberListVerbose($this->member, $this->memberId, $this->socialSecurity, $this->fetchBoatInformation());
+            } else {
+                $html .= $this->generateMemberListCompact($this->member, $this->memberId, $this->socialSecurity, $numberOfBoats);
+            }
         }
+
+        return $html;
     }
-    
+
     /**
      * 
      * fetch boat information for every member, only used on verbose list
      * 
      * @return String
-     */  
-      
-    private function fetchBoatInformation($MemberId)
+     */
+
+    private function fetchBoatInformation()
     {
-        $html = "";
-        $boatInfo = $this->boatModel->fetchBoatData($MemberId);
-        $decodedBoatInfo = json_decode($boatInfo, true);
-        if ($decodedBoatInfo != null) {
-            foreach ($decodedBoatInfo as $key) {
-                $type = $key[self::$typeKey];
-                $length = $key[self::$lengthKey];
-                $boatId = $key[self::$idKey];
-                $html .= $this->boatInfoBox($type, $length, $boatId);
-            }
-            return $html;
+        $html = '';
+        $this->boatModel->createBoatList($this->memberId);
+        $boats = $this->boatModel->getBoatList();
+
+        foreach ($boats as $key) {
+            $type = $key->getBoatType();
+            $length = $key->getBoatLength();
+            $boatId = $key->getId();
+            $html .= $this->boatInfoBox($type, $length, $boatId);
         }
+
+        return $html;
     }
 
     /**
@@ -82,7 +80,7 @@ class ListOfMemberView
      * 
      * @return String
      */
-    
+
     private function boatInfoBox($type, $length, $boatId)
     {
         return '
@@ -106,7 +104,7 @@ class ListOfMemberView
      * 
      * @return String
      */
-    
+
     public function renderListTable()
     {
         if (isset($_GET['verbose'])) {
@@ -140,7 +138,7 @@ class ListOfMemberView
      * 
      * @return String
      */
-    
+
     public function generateMemberListCompact($member, $memberId, $socialSecurity, $numberOfBoats)
     {
         return '
@@ -171,7 +169,7 @@ class ListOfMemberView
      * 
      * @return String
      */
-    
+
     public function generateMemberListVerbose($member, $memberId, $socialSecurity, $boatList)
     {
         return '
@@ -251,7 +249,7 @@ class ListOfMemberView
      * 
      * @return Bool
      */
-    
+
     public function lookForPost() : bool
     {
         return isset($_POST[self::$delete]);

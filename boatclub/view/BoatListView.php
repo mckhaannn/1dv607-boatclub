@@ -2,16 +2,17 @@
 
 namespace view;
 
-class BoatListView {
+class BoatListView
+{
 
   private static $deleteBoat = 'selectedMemberView::deleteBoat';
   private $boatModel;
   private static $memberIdPost = 'memberId';
   private static $boatIdPost = 'boatId';
-  
+
   public function __construct(\model\BoatModel $boatModel)
   {
-    $this->boatModel = $boatModel;    
+    $this->boatModel = $boatModel;
   }
 
 
@@ -20,7 +21,8 @@ class BoatListView {
    * 
    * @return String
    */
-  public function generateBoatTable() {
+  public function generateBoatTable()
+  {
     return '
       <div class="container">
       <br>
@@ -50,26 +52,24 @@ class BoatListView {
 
     ';
   }
-  
+
   /**
    * 
    * Fetch boat information and creates a list of boats
    * 
    * @return String
    */
-  private function fetchBoatInforamtion() {
-    $html = "";
-    $boatData = $this->boatModel->fetchBoatData($this->getMemberId());
-    $decodedBoatData =  json_decode($boatData, true);
-    if($decodedBoatData != null) {
-      foreach ($decodedBoatData as $key) {
-        $type = $key['Type'];
-        $length = $key['Length'];
-        $id = $key['ID'];
-        $html .= $this->generateBoatList($type, $length, $id, $this->getMemberId());
-      }
-      return $html;
+  private function fetchBoatInforamtion()
+  {
+    $html = '';
+    $boats = $this->boatModel->getBoatList($this->getMemberId());
+    foreach ($boats as $key) {
+      $type = $key->getBoatType();
+      $length = $key->getBoatLength();
+      $id = $key->getId();
+      $html .= $this->generateBoatList($type, $length, $id, $this->getMemberId());
     }
+    return $html;
   }
 
 
@@ -81,26 +81,27 @@ class BoatListView {
    */
   public function generateBoatList($type, $length, $id, $memberId)
   {
-      return '
-        <form method="post">
-        <tr>
-        <td>' . $id . '</td>
-        <td value="' . $type . '">' . $type . '</td>
-        <td>' . $length . '</td>
-        <td></td>
-        <td>
-        <input type="hidden" name="type" value="' . $type . '">
-        <input type="hidden" name="boatId" value="' . $id . '">
-        <input type="hidden" name="length" value="' . $length . '">
-        <input type="hidden" name="memberId" value="' . $memberId . '">
-        <button  class="btn btn-primary btn-xs " type="submit" name="editBoat">edit</button>
-        </td>
-        <td>
-        <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$deleteBoat . '" value="deleteBoat" />
-        </td>
+
+    return '
+    <form method="post">
+    <tr>
+    <td>' . $id . '</td>
+    <td value="' . $type . '">' . $type . '</td>
+    <td>' . $length . '</td>
+    <td></td>
+    <td>
+    <input type="hidden" name="type" value="' . $type . '">
+    <input type="hidden" name="boatId" value="' . $id . '">
+    <input type="hidden" name="length" value="' . $length . '">
+    <input type="hidden" name="memberId" value="' . $memberId . '">
+    <button  class="btn btn-primary btn-xs " type="submit" name="editBoat">edit</button>
+    </td>
+    <td>
+    <input  class="btn btn-danger btn-xs" type="submit" name="' . self::$deleteBoat . '" value="deleteBoat" />
+    </td>
     </tr>
     </form>
-        ';
+    ';
   }
 
   /**
@@ -108,25 +109,28 @@ class BoatListView {
    * 
    * @return String
    */
-  public function getMemberId() {    
-    if(isset($_POST[self::$memberIdPost])) {
+  public function getMemberId()
+  {
+    if (isset($_POST[self::$memberIdPost])) {
       return $_POST[self::$memberIdPost];
     }
   }
-  
-  public function getBoatId() {
+
+  public function getBoatId()
+  {
+    // var_dump($_POST[self::$boatIdPost]);
     return $_POST[self::$boatIdPost];
   }
   
   /*
-  * check if member wants to delete
-  *
-  * @return 
-  */
+   * check if member wants to delete
+   *
+   * @return 
+   */
 
   public function lookForDeletePost() : bool
   {
-      return isset($_POST[self::$deleteBoat]);
+    return isset($_POST[self::$deleteBoat]);
   }
 
 }

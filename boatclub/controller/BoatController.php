@@ -2,6 +2,9 @@
 
 namespace controller;
 
+use view\AddBoatView;
+
+
 class BoatController
 {
 
@@ -29,21 +32,20 @@ class BoatController
    * 
    * adds a boat to a selected user
    */
-  
+
   public function routeToAddBoat()
   {
-    $this->boatModel->reciveBoatData($this->addBoatView->getBoatType(), $this->addBoatView->getLength(), $this->addBoatView->getMemberId());
-    $this->boatModel->addBoatToMember();
+    $this->boatModel->addBoatToMember($this->addBoatView->getCreatedBoat($this->boatModel->generateBoatId()), $this->addBoatView->getMemberId());
   }
 
   /**
    * 
    * edit boat on a selected user
    */
-  
+
   public function routeToEditBoat()
   {
-    $this->boatModel->updateBoatData($this->updateBoatView->getUpdatedType(), $this->updateBoatView->getUpdatedLength(), $this->updateBoatView->getBoatId(), $this->updateBoatView->MemberId());
+    $this->boatModel->updateBoatData($this->updateBoatView->getUpdatedBoat(), $this->updateBoatView->MemberId());
   }
 
 
